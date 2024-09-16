@@ -1,5 +1,8 @@
 
 class Direction {
+    static get NONE(){
+        return -1;
+    }
     static get NORTH(){
         return 0;
     }
