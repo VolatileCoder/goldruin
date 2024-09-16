@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "compileEngine",
+            "command": "type", // Could be any other shell command
+            "args": ["${workspaceFolder}/assets/js/engine/*.js", ">", "${workspaceFolder}/assets/js/engine.js"],
+            "type": "shell"        
+        },
+        {
+            "label": "compileGame",
+            "command": "type", // Could be any other shell command
+            "args": ["${workspaceFolder}/assets/js/goldruin/*.js", ">", "${workspaceFolder}/assets/js/goldruin.js"],
+            "type": "shell",
+            "dependsOn":["compileEngine"]
+        },
+        {
+            "label": "compileFinal",
+            "command": "type", // Could be any other shell command
+            "args": ["${workspaceFolder}/assets/js/*.js", ">", "${workspaceFolder}/docs/play/game.js"],
+            "type": "shell",
+            "dependsOn":["compileGame"]
+        },
+        {
+            "label": "cleanup",
+            "command": "del", // Could be any other shell command
+            "args": ["${workspaceFolder}/assets/js/*.js"],
+            "type": "shell",
+            "dependsOn": ["compileFinal"]
+        },
+        {
+            "label": "compile",
+            "dependsOn": ["cleanup"]
+        },
+    ]
+}
