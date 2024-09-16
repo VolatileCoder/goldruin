@@ -60,6 +60,14 @@ class Sprite{
         return this.#size;
     }
 
+    get scale(){
+        return this.#scale;
+    }
+    
+    set scale(value){
+        this.#scale = value;
+    }
+
     constructor(screen, frameset, imageWidth, imageHeight, spriteWidth, spriteHeight, x, y){
         this.#screen = screen;
         this.#image.frameset = frameset;
