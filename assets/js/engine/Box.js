@@ -1,38 +1,15 @@
 class Box {
-    #x=0;
-    #y=0;
-    #w=0;
-    #h=0;
+    x=0;
+    y=0;
+    width=0;
+    height=0;
     constructor(x,y,w,h){
-        this.#x = x;
-        this.#y = y;
-        this.#w = w;
-        this.#h = h;
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
     }
-    get x(){
-        return this.#x;
-    }
-    set x(value){
-        this.#x = value;
-    }
-    get y(){
-        return this.#y;
-    }
-    set y(value){
-        this.#y = value;
-    }
-    get width(){
-        return this.#w;
-    }
-    set width(value){
-        this.#w = value;
-    }
-    get height(){
-        return this.#h;
-    }
-    set height(value){
-        this.#h = value;
-    }
+
     reset(newX, newY, newW, newH){
         this.x = newX;
         this.y = newY;
@@ -115,10 +92,10 @@ class Box {
     }
     render(color){
         if(!this.element){ 
-            this.element = game.screen.rect(this.x, this.y + dimensions.infoHeight, this.width, this.height).attr("stroke", color);
+            this.element = game.screen.rect(this.x, this.y, this.width, this.height).attr("stroke", color);
             game.screen.onClear(()=>{this.element = null});
         };
-        this.element.attr({x:this.x, y:this.y + dimensions.infoHeight, width: this.width, height: this.height});
+        this.element.attr({x:this.x, y:this.y, width: this.width, height: this.height});
     }
     remove(){
         if(this.element){

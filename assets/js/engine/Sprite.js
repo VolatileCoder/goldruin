@@ -155,7 +155,7 @@ class Sprite{
 
     #buildTranslation (x, y, r){
         var tx = Math.round(x * (1/this.#scale) - this.#animation.frame * this.#size.width);
-        var ty = Math.round(y * (1/this.#scale) - this.#animation.series *  this.#size.height) + dimensions.infoHeight;
+        var ty = Math.round(y * (1/this.#scale) - this.#animation.series *  this.#size.height);
         var t = "t" + tx + "," + ty 
         if(this.#scale!=1){
             t="s"+this.#scale +","+this.#scale+",0,0" + t;
