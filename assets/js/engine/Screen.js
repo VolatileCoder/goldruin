@@ -39,16 +39,16 @@ class Screen {
     };
 
     drawAngleSegmentX(angle, startX, endX, translateX, translateY, color, thickness){
-        var startY = Math.round(trig.tangent(angle) * startX);
-        var endY = Math.round(trig.tangent(angle) * endX);
+        var startY = Math.round(Trig.tangent(angle) * startX);
+        var endY = Math.round(Trig.tangent(angle) * endX);
         startX+=translateX; endX += translateX;
         startY+=translateY; endY += translateY;
         return this.drawLine(startX, startY, endX, endY, color, thickness);
     };
     
     drawAngleSegmentY = function(angle, startY, endY, translateX, translateY, color, thickness){
-        var startX = Math.round(trig.cotangent(angle) * startY);
-        var endX = Math.round(trig.cotangent(angle) * endY);
+        var startX = Math.round(Trig.cotangent(angle) * startY);
+        var endX = Math.round(Trig.cotangent(angle) * endY);
         startX+=translateX; endX += translateX;
         startY+=translateY; endY += translateY;
         return this.drawLine(startX, startY, endX, endY, color, thickness);
