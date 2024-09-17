@@ -50,7 +50,7 @@ class Statistics {
         this.roomsVisited += s.roomsVisited;
         this.roomsSpawned += s.roomsSpawned;
         this.timeSpent += s.timeSpent;
-        this.tntCollected += s.tntCollected;
+        this.tntCollected += s.tntCollected;    
         this.tntThrown+=s.tntThrown;
     }
 
@@ -71,8 +71,9 @@ class Statistics {
         var stats=[];
 
         y += 64;
-        stats.push(this.#screen.text(x1, y, "LEVELS CLEARED:").attr(attrHeaderLeft));
-        stats.push(this.#screen.text(x2, y,  numberWithCommas(game.level.number + (game.player.status==DEAD ? 0 : 1))).attr(attrHeaderRight));
+        stats.push(this.#screen.text(x1, y, "LEVELS CLEARED:").attr(attrHeaderLeft))
+        
+        stats.push(this.#screen.text(x2, y,  numberWithCommas(game.level.number + (game.player.state==DEAD ? 0 : 1))).attr(attrHeaderRight));
 
         y += 64;
         stats.push(this.#screen.text(x1, y, "TIME SPENT:").attr(attrHeaderLeft));
