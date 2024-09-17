@@ -1,4 +1,6 @@
-class Color{
+//REQUIRES VC
+
+VC.Color = class {
     static hexToRGB(hexColor){
         if(hexColor.length==6 || hexColor.length == 3){
             hexColor = "#" + hexColor
@@ -37,9 +39,9 @@ class Color{
 
     static calculateAlpha(backgroundHex, foregroundHex, foregroundOpacity){
         //alpha * new + (1 - alpha) * old
-        var backgroundRGB = Color.hexToRGB(backgroundHex);
-        var foregroundRGB = Color.hexToRGB(foregroundHex);
-        return Color.rgbToHex({
+        var backgroundRGB = VC.Color.hexToRGB(backgroundHex);
+        var foregroundRGB = VC.Color.hexToRGB(foregroundHex);
+        return VC.Color.rgbToHex({
             r: Math.round(foregroundRGB.r * foregroundOpacity + (1-foregroundOpacity) * backgroundRGB.r),
             g: Math.round(foregroundRGB.g * foregroundOpacity + (1-foregroundOpacity) * backgroundRGB.g),
             b: Math.round(foregroundRGB.b * foregroundOpacity + (1-foregroundOpacity) * backgroundRGB.b)

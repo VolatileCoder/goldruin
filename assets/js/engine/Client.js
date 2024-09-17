@@ -1,64 +1,64 @@
-//REQUIRES Orientation
+//REQUIRES VC, Orientation
 
-class Client {
+VC.Client = class {
     static get screenHeight(){
         return window.screen.height;
     }
     static get screenWidth(){
         return window.screen.width;
     }
-    static _orientation = Orientation.UNSET;
+    static _orientation = VC.Orientation.UNSET;
     static get orientation(){
-        return Client._orientation;
+        return VC.Client._orientation;
     }
     static _orientationChangeListeners=[];
     static OnOrientationChange(func){
-        Client._orientationChangeListeners.push(func);
+        VC.Client._orientationChangeListeners.push(func);
     }
-    static _lastOrientation = Orientation.UNSET;
+    static _lastOrientation = VC.Orientation.UNSET;
     static _onOrientationChange(e){
-        if((e && e.matches)||Client.screenWidth>=Client.screenHeight) {
-            Client._orientation = Orientation.LANDSCAPE;
+        if((e && e.matches)||VC.Client.screenWidth>=VC.Client.screenHeight) {
+            VC.Client._orientation = VC.Orientation.LANDSCAPE;
         } else {
-            Client._orientation = Orientation.PORTRAIT;
+            VC.Client._orientation = VC.Orientation.PORTRAIT;
         }
     
-        if (Client.orientation!=Client._lastOrientation || Client._lastOrientation == Orientation.UNSET){
-            Client._lastOrientation = Client.orientation;
-            Client._orientationChangeListeners.forEach((func)=>{func();})
+        if (VC.Client.orientation!=VC.Client._lastOrientation || VC.Client._lastOrientation == VC.Orientation.UNSET){
+            VC.Client._lastOrientation = VC.Client.orientation;
+            VC.Client._orientationChangeListeners.forEach((func)=>{func();})
         }
     }
 
     static _readyListeners=[];
     static _ready = false;
     static OnReady(func){
-        if (Client._ready){
+        if (VC.Client._ready){
             console.log("WARNING: Client ready already.");
             func();
             return;
         }
-        Client._readyListeners.push(func);
+        VC.Client._readyListeners.push(func);
     }
     static _onReady(func){
-        if (Client._ready){
+        if (VC.Client._ready){
             return
         }
-        Client._ready = true;
-        Client._readyListeners.forEach((func)=>{func();})
+        VC.Client._ready = true;
+        VC.Client._readyListeners.forEach((func)=>{func();})
     }
 }
 
 //Call once to set
-Client._onOrientationChange(window.matchMedia("(orientation: landscape)"));
+VC.Client._onOrientationChange(window.matchMedia("(orientation: landscape)"));
 
 //Bind for changes
-window.matchMedia("(orientation: landscape)").addEventListener("change", Client._onOrientationChange)
+window.matchMedia("(orientation: landscape)").addEventListener("change", VC.Client._onOrientationChange)
 document.onreadystatechange = function () {
     if (document.readyState == "complete") {
         // document is ready. Do your stuff here
-        Client._onReady();
+        VC.Client._onReady();
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
-    Client._onReady();
+    VC.Client._onReady();
 });

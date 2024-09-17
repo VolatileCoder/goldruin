@@ -1,7 +1,7 @@
 
 var game
 
-Client.OnReady(()=>{
+VC.Client.OnReady(()=>{
     game = newGame();
 
     game.screen.canvas.addEventListener("touchstart",function(e){

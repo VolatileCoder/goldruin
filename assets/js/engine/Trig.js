@@ -1,4 +1,6 @@
-class Trig {
+//REQUIRES VC
+
+VC.Trig = class {
     static degreesToRadians(angle){
         return (angle % 360) / 360 * 2 * Math.PI;
     }

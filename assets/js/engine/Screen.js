@@ -1,6 +1,6 @@
-//REQUIRES Trig
+//REQUIRES VC, Trig
 
-class Screen {
+VC.Screen = class {
     #screen = null;
     #width = 0;
     #height = 0;
@@ -40,16 +40,16 @@ class Screen {
     };
 
     drawAngleSegmentX(angle, startX, endX, translateX, translateY, color, thickness){
-        var startY = Math.round(Trig.tangent(angle) * startX);
-        var endY = Math.round(Trig.tangent(angle) * endX);
+        var startY = Math.round(VC.Trig.tangent(angle) * startX);
+        var endY = Math.round(VC.Trig.tangent(angle) * endX);
         startX+=translateX; endX += translateX;
         startY+=translateY; endY += translateY;
         return this.drawLine(startX, startY, endX, endY, color, thickness);
     };
     
     drawAngleSegmentY = function(angle, startY, endY, translateX, translateY, color, thickness){
-        var startX = Math.round(Trig.cotangent(angle) * startY);
-        var endX = Math.round(Trig.cotangent(angle) * endY);
+        var startX = Math.round(VC.Trig.cotangent(angle) * startY);
+        var endX = Math.round(VC.Trig.cotangent(angle) * endY);
         startX+=translateX; endX += translateX;
         startY+=translateY; endY += translateY;
         return this.drawLine(startX, startY, endX, endY, color, thickness);
@@ -183,7 +183,5 @@ class Screen {
     get top(){
         return this.#screen.top;
     }
-
-
-
+    
 }   

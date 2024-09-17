@@ -1,6 +1,6 @@
-//REQUIRES Screen
+//REQUIRES VC, Screen
 
-class Sprite{
+VC.Sprite = class {
     #screen = null;
     #image = {
         frameset: null, 

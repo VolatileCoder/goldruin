@@ -1,6 +1,6 @@
-//REQUIRES Screen
+//REQUIRES VC, Screen
 
-class Box {
+ VC.Box = class{
     x=0;
     y=0;
     width=0;
@@ -79,7 +79,7 @@ class Box {
         
         // Check if there's an actual intersection
         if (left < right && top < bottom) {
-            return new Box(left, top, right-left, bottom-top);
+            return new VC.Box(left, top, right-left, bottom-top);
         } else {
             // No intersection
             return null;

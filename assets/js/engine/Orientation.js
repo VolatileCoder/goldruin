@@ -1,5 +1,6 @@
+//REQUIRES VC
 
-class Orientation {
+VC.Orientation = class {
     static get UNSET(){
         return -1;
     }
