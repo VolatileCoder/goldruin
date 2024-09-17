@@ -1,3 +1,5 @@
+//REQUIRES Screen
+
 class Box {
     x=0;
     y=0;
@@ -90,10 +92,10 @@ class Box {
         var dy = c2.y - c1.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
-    render(color){
+    render(screen, color){
         if(!this.element){ 
-            this.element = game.screen.rect(this.x, this.y, this.width, this.height).attr("stroke", color);
-            game.screen.onClear(()=>{this.element = null});
+            this.element = screen.rect(this.x, this.y, this.width, this.height).attr("stroke", color);
+            screen.onClear(()=>{this.element = null});
         };
         this.element.attr({x:this.x, y:this.y, width: this.width, height: this.height});
     }

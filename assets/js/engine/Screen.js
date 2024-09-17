@@ -1,3 +1,4 @@
+//REQUIRES Trig
 
 class Screen {
     #screen = null;

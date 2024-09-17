@@ -12,13 +12,11 @@ class Client {
         return Client._orientation;
     }
     static _orientationChangeListeners=[];
-    static AddOrientationChangeListener(func){
+    static OnOrientationChange(func){
         Client._orientationChangeListeners.push(func);
     }
-
     static _lastOrientation = Orientation.UNSET;
-    static onOrientationChange(e){
-        console.log(Client.screenWidth, Client.screenHeight)
+    static _onOrientationChange(e){
         if((e && e.matches)||Client.screenWidth>=Client.screenHeight) {
             Client._orientation = Orientation.LANDSCAPE;
         } else {
@@ -30,10 +28,37 @@ class Client {
             Client._orientationChangeListeners.forEach((func)=>{func();})
         }
     }
+
+    static _readyListeners=[];
+    static _ready = false;
+    static OnReady(func){
+        if (Client._ready){
+            console.log("WARNING: Client ready already.");
+            func();
+            return;
+        }
+        Client._readyListeners.push(func);
+    }
+    static _onReady(func){
+        if (Client._ready){
+            return
+        }
+        Client._ready = true;
+        Client._readyListeners.forEach((func)=>{func();})
+    }
 }
 
-//Bind for changes
-window.matchMedia("(orientation: landscape)").addEventListener("change", Client.onOrientationChange)
 //Call once to set
-Client.onOrientationChange(window.matchMedia("(orientation: landscape)"));
-console.log(Client.orientation);
+Client._onOrientationChange(window.matchMedia("(orientation: landscape)"));
+
+//Bind for changes
+window.matchMedia("(orientation: landscape)").addEventListener("change", Client._onOrientationChange)
+document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+        // document is ready. Do your stuff here
+        Client._onReady();
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    Client._onReady();
+});

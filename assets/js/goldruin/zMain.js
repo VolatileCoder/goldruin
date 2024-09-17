@@ -1,23 +1,27 @@
-//REQUIRES Direction, game, Statistics
-game = newGame();
 
-game.screen.canvas.addEventListener("touchstart",function(e){
-    Client._orientation = Orientation.PORTRAIT;
+var game
+
+Client.OnReady(()=>{
+    game = newGame();
+
+    game.screen.canvas.addEventListener("touchstart",function(e){
+        Client._orientation = Orientation.PORTRAIT;
+        changeOrientation();
+    });
     changeOrientation();
-});
-changeOrientation();
+    
+    
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            pause();
+        }
+    });
+    
+    game.debug = DEBUG;
+    titleScreen ();
+    gameLoop(Date.now());
+})
 
-
-document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-        
-        pause();
-    }
-});
-
-game.debug = DEBUG;
-titleScreen ();
-requestAnimationFrame(gameLoop);
 
 window.onerror = function(message, source, lineNumber, colno, error) {
     if(!game.debug){
@@ -44,9 +48,3 @@ window.onerror = function(message, source, lineNumber, colno, error) {
 
     }
 };
-
-//drawMap(game.screen,game.level);
-
-
-
-//exitLevel();

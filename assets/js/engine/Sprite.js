@@ -1,3 +1,5 @@
+//REQUIRES Screen
+
 class Sprite{
     #screen = null;
     #image = {
