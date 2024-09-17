@@ -2,12 +2,16 @@
 
 class Screen {
     #screen = null;
+    #width = 0;
+    #height = 0;
     constructor(domElementId, x, y, width, height){
-        var screen = Raphael(domElementId, dimensions.width, dimensions.height);
-        screen.setViewBox(x, y, dimensions.width, dimensions.height, true);
+        var screen = Raphael(domElementId, width, height);
+        screen.setViewBox(x, y, width, height, true);
         screen.canvas.setAttribute('preserveAspectRatio', 'meet');
         screen.canvas.setAttributeNS("http://www.w3.org/XML/1998/namespace", "xml:space","preserve"); 
         this.#screen = screen;
+        this.#width = width;
+        this.#height = height;
     }
 
     drawLine(x1,y1,x2,y2,color,thickness){
@@ -70,11 +74,16 @@ class Screen {
         this.#clearListeners.push(handler);
     }
 
-    //RAPHAEL PASS-THRU
-    
-    setViewBox(){
-        this.#screen.setViewBox(...arguments)
+    fadeTo(color, callback){
+        this.drawRect(0,0,this.#width, this.#height, color, color, 1).attr({opacity: 0}).animate({opacity:1}, 350, null, callback);
     }
+    
+    fadeInFrom(color, callback){
+        this.drawRect(0,0,this.#width, this.#height, color, color, 0).attr({opacity: 1}).animate({opacity:0}, 350, null, callback);
+    }
+    
+
+    //RAPHAEL PASS-THRU
 
     get bottom(){
         return this.#screen.bottom;
@@ -162,6 +171,8 @@ class Screen {
     }
 
     setViewBox(x, y, w, h, fit){
+        this.#width = w;
+        this.#height = h;
         return this.#screen.setViewBox(x, y, w, h, fit);
     }
 
