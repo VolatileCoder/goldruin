@@ -1,5 +1,12 @@
-
+//REQUIRES Direction, game, Statistics
 game = newGame();
+
+game.screen.canvas.addEventListener("touchstart",function(e){
+    Client._orientation = Orientation.PORTRAIT;
+    changeOrientation();
+});
+changeOrientation();
+
 
 document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
@@ -9,9 +16,6 @@ document.addEventListener("visibilitychange", () => {
 });
 
 game.debug = DEBUG;
-portrait = window.matchMedia("(orientation: landscape)");
-portrait.addEventListener("change", onOrientationChange)
-onOrientationChange(window.matchMedia("(orientation: landscape)"));
 titleScreen ();
 requestAnimationFrame(gameLoop);
 

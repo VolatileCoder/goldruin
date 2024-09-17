@@ -3,7 +3,6 @@ class Screen {
     #screen = null;
     constructor(domElementId, x, y, width, height){
         var screen = Raphael(domElementId, dimensions.width, dimensions.height);
-        screen.canvas.addEventListener("touchstart",function(e){setOrientationPortrait()});
         screen.setViewBox(x, y, dimensions.width, dimensions.height, true);
         screen.canvas.setAttribute('preserveAspectRatio', 'meet');
         screen.canvas.setAttributeNS("http://www.w3.org/XML/1998/namespace", "xml:space","preserve"); 
@@ -82,6 +81,10 @@ class Screen {
 
     circle(x, y, r){
         return this.#screen.circle(x, y, r);
+    }
+
+    get canvas(){
+        return this.#screen.canvas;
     }
 
     get customAttributes(){

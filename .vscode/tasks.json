@@ -6,14 +6,14 @@
     "tasks": [
         {
             "label": "compileEngine",
-            "command": "type", // Could be any other shell command
-            "args": ["${workspaceFolder}/assets/js/engine/*.js", ">", "${workspaceFolder}/assets/js/engine.js"],
+            "command": "go", // Could be any other shell command
+            "args": ["run", "${workspaceFolder}/compile.go", "${workspaceFolder}/assets/js/engine"],
             "type": "shell"        
         },
         {
             "label": "compileGame",
-            "command": "type", // Could be any other shell command
-            "args": ["${workspaceFolder}/assets/js/goldruin/*.js", ">", "${workspaceFolder}/assets/js/goldruin.js"],
+            "command": "go", // Could be any other shell command
+            "args": ["run", "${workspaceFolder}/compile.go", "${workspaceFolder}/assets/js/goldruin"],
             "type": "shell",
             "dependsOn":["compileEngine"]
         },
