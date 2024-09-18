@@ -1,4 +1,4 @@
-//REQUIRES main, Statistics, Direction
+//REQUIRES main, Statistics, Direction, State, Team
 class Game extends VC.Game {
     infoScreen = new VC.Screen("info", 0, 0, dimensions.width, dimensions.height);
     screen = new VC.Screen("main", 0, dimensions.infoHeight, dimensions.width, dimensions.height);
@@ -10,10 +10,10 @@ class Game extends VC.Game {
         //console.log("test", deltaT);
         if (this.currentRoom){
                 this.currentRoom.objects.forEach((o)=>{
-                    if(o.state != DYING || o.state != DEAD){
+                    if(o.state != State.DYING || o.state != State.DEAD){
                         o.move(deltaT);
                     }
-                    if(o.state == DEAD ){
+                    if(o.state == State.DEAD ){
                         this.deadObjects.push(o);
                     }
                 });    
@@ -21,7 +21,7 @@ class Game extends VC.Game {
             var barred = 0;
             
             this.currentRoom.objects.forEach((o)=>{
-                if(o.team == DUNGEON && o.state != DYING && o.state != DEAD){
+                if(o.team == Team.DUNGEON && o.state != State.DYING && o.state != State.DEAD){
                     barred = 1;
                 }
             });

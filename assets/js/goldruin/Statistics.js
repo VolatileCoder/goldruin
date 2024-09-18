@@ -1,3 +1,4 @@
+//REQUIRES State
 
 class Statistics {
     #screen = null;
@@ -73,7 +74,7 @@ class Statistics {
         y += 64;
         stats.push(this.#screen.text(x1, y, "LEVELS CLEARED:").attr(attrHeaderLeft))
         
-        stats.push(this.#screen.text(x2, y,  numberWithCommas(game.level.number + (game.player.state==DEAD ? 0 : 1))).attr(attrHeaderRight));
+        stats.push(this.#screen.text(x2, y,  numberWithCommas(game.level.number + (game.player.state==State.DEAD ? 0 : 1))).attr(attrHeaderRight));
 
         y += 64;
         stats.push(this.#screen.text(x1, y, "TIME SPENT:").attr(attrHeaderLeft));
