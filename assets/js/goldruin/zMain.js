@@ -1,8 +1,9 @@
+//REQUIRES Game
 
 var game
 
 VC.Client.OnReady(()=>{
-    game = newGame();
+    game = new Game();
 
     game.screen.canvas.addEventListener("touchstart",function(e){
         Client._orientation = Orientation.PORTRAIT;
@@ -19,7 +20,7 @@ VC.Client.OnReady(()=>{
     
     game.debug = DEBUG;
     titleScreen ();
-    gameLoop(Date.now());
+    game.Play();
 })
 
 
