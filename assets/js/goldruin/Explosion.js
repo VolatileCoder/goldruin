@@ -5,7 +5,7 @@ class Explosion extends GameObject{
     #sprite = null;
     room = null;
     constructor(x,y){
-        super()
+        super();
         this.box.x = x-100;
         this.box.y = y-100;
         this.box.width = 200;
