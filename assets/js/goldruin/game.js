@@ -1,11 +1,16 @@
-//REQUIRES main, Statistics, Direction, State, Team, Adventurer
+//REQUIRES main, Statistics, Direction, State, Team, Adventurer< Player
 class Game extends VC.Game {
     infoScreen = new VC.Screen("info", 0, 0, dimensions.width, dimensions.height);
     screen = new VC.Screen("main", 0, dimensions.infoHeight, dimensions.width, dimensions.height);
-    player =  newPlayer(new Adventurer(newInputController()))
+    player = new Adventurer(newInputController());
     statistics =  new Statistics(screen)
 
-    deadObjects = []
+    constructor(){
+        super();
+        this.player.team = Team.HEROIC;
+    }
+
+    deadObjects = [];
     OnPreRender(deltaT){
         //console.log("test", deltaT);
         if (this.currentRoom){
