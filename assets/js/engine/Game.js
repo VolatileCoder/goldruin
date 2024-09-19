@@ -20,8 +20,8 @@ VC.Game = class{
         if(this.#state == VC.GameState.RUNNING){
             //this.#preRender(deltaT)
             this.OnPreRender(deltaT);
-            this.OnRender(deltaT)
-            this.OnPostRender(deltaT)
+            this.OnRender(deltaT);
+            this.OnPostRender(deltaT);
         }
         window.setTimeout(()=>{this._loop(startTime);},0);
     }

@@ -76,10 +76,10 @@ class Snake extends Character {
         var targets = this.getObjectsInRangeOfAttack();
         targets.forEach((o)=>{
             if(o.team == opposingTeam){
-                rect = this._attackBox.intersectRect(o.box)
+                var rect = this._attackBox.intersectRect(o.box)
                 if(rect){
                     o.hurt(this.damage);
-                    sb = new Starburst()
+                    var sb = new Starburst()
                     sb.box = rect;
                     game.currentRoom.objects.push(sb);
                 }

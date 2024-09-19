@@ -16,8 +16,8 @@ class Statistics {
     caveSpidersKilled = 0;
     swordSkeletonsSpawned = 0;
     swordSkeletonsKilled = 0;
-    kingCobrasSpawned = 0;
-    kingCobrasKilled = 0;
+    snakesSpawned = 0;
+    snakesKilled = 0;
     doorsUnlocked = 0;
     doorsSpawned = 0;
     roomsVisited = 0;
@@ -44,8 +44,8 @@ class Statistics {
         this.caveSpidersKilled += s.caveSpidersKilled;
         this.swordSkeletonsSpawned += s.swordSkeletonsSpawned;
         this.swordSkeletonsKilled += s.swordSkeletonsKilled;
-        this.kingCobrasSpawned += s.kingCobrasSpawned;
-        this.kingCobrasKilled += s.kingCobrasKilled;
+        this.snakesSpawned += s.snakesSpawned;
+        this.snakesKilled += s.snakesKilled;
         this.doorsUnlocked += s.doorsUnlocked;
         this.doorsSpawned += s.doorsSpawned;
         this.roomsVisited += s.roomsVisited;
@@ -130,10 +130,10 @@ class Statistics {
             stats.push(this.#screen.text(x1 + indent, y,"SKELETONS SMASHED:").attr(attrStatLeft));
             stats.push(this.#screen.text(x2, y, numberWithCommas(this.swordSkeletonsKilled) + " / " + numberWithCommas(this.swordSkeletonsSpawned)).attr(attrStatRight));
         }
-        if(this.kingCobrasSpawned>0){       
+        if(this.snakesSpawned>0){       
             y += 40;
             stats.push(this.#screen.text(x1 + indent, y,"SNAKES STOMPED:").attr(attrStatLeft));
-            stats.push(this.#screen.text(x2, y, numberWithCommas(this.kingCobrasKilled) + " / " + numberWithCommas(this.kingCobrasSpawned)).attr(attrStatRight));
+            stats.push(this.#screen.text(x2, y, numberWithCommas(this.snakesKilled) + " / " + numberWithCommas(this.snakesSpawned)).attr(attrStatRight));
         }
 
         var ms = 0;

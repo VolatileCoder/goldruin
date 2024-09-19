@@ -52,7 +52,6 @@ class TreasureChest extends GameObject{
                     this.#content = Math.round(Math.random() * 6) + Treasure.HEART;
                 }
                 
-            console.log("settled content: ", this.#content);
             }
             if(this.#content >= Treasure.SILVERKEY && this.#content <= Treasure.BLUEKEY){
                 game.player.keys.push(this.#content);
