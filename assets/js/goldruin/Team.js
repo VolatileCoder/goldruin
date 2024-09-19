@@ -8,5 +8,13 @@ class Team {
     static get DUNGEON(){
         return 2;
     }
+    static getOpposingTeam(team){
+        switch(team){
+            case Team.HEROIC:
+                return Team.DUNGEON;
+            case Team.DUNGEON:
+                return Team.HEROIC;
+        }
+    }
 }
 

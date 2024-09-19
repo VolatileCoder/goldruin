@@ -1,6 +1,5 @@
 //REQUIRES GameObject
-
-//TODO: Still in use?
+//Used to make invsibile walls (used in Exit)
 class InvisibleObject extends GameObject{
     render(deltaT){
         if(game.debug){

@@ -18,10 +18,10 @@ class TorchLightEffect extends GameObject{
         this.#offsetY = Math.random() * 7 - 3.5;
     };
     render(deltaT){
-        if(!this.#element){
+        if(this.#element==null){
             this.#element = game.screen.drawEllipse(this.box.center().x, this.box.center().y, this.#torch.intensity * 10 + 140, this.#torch.intensity * 10 + 140, 0, 0, "#fea","#000",0)
             this.#element.attr({"fill":"#fea","opacity": .15});
-            game.screen.onClear(()=>{this.#element==null});
+            game.screen.onClear(()=>{this.#element = null});
         }
         if (this.#torch){
             this.#element.attr({
@@ -32,13 +32,13 @@ class TorchLightEffect extends GameObject{
             });
         }
 
-        this.#element.transform("t" + this.#offsetX + "," + this.#offsetY);
-        this.#element.toFront();//HACK:shouldn't be needed.    
+        this.#element.transform("t" + this.#offsetX + "," + this.#offsetY); 
+        this.#element.toFront();    
 
     };
     remove(){
         if(this.#element){
-            this.element.remove();
+            this.#element.remove();
         }
         this.#element = null;
         this.box.remove();

@@ -60,7 +60,6 @@ class Character extends GameObject{
                 this.direction=Direction.WEST;
             }
 
-            //TODO: always return x & y
             multiplier = 1
             if (Math.abs(input.x)==1 && Math.abs(input.y)==1){
                 multiplier = 1/Math.sqrt(2);
@@ -193,7 +192,6 @@ function newGameCharacter(){
                 this.direction=Direction.WEST;
             }
 
-            //TODO: always return x & y
             multiplier = 1
             if (Math.abs(input.x)==1 && Math.abs(input.y)==1){
                 multiplier = 1/Math.sqrt(2);
