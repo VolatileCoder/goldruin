@@ -7,7 +7,11 @@ class Character extends GameObject{
     _attackDuration = 500;
     _attackCooldown = 1000;
     _hurtDuration = 500;
-    controller = new ControllerBase();
+    controller = null;
+    constructor(controller){
+        super();
+        this.controller = controller;
+    }
 
     get canAttack(){
         if(!this._lastAttack || Date.now() - this._lastAttack > this._attackCooldown){
@@ -15,9 +19,7 @@ class Character extends GameObject{
         }
         return false;
     }
-    attack(){
-        console.warn("unimplemented: attack()");
-    }
+
     move(deltaT) {
         if(this.state == State.DYING){
             if(Date.now()-this._stateStart <= 700){
@@ -60,11 +62,11 @@ class Character extends GameObject{
                 this.direction=Direction.WEST;
             }
 
-            multiplier = 1
+            var multiplier = 1
             if (Math.abs(input.x)==1 && Math.abs(input.y)==1){
                 multiplier = 1/Math.sqrt(2);
             }
-            constrained = game.currentRoom.constrain(this,
+            var constrained = game.currentRoom.constrain(this,
                 this.box.x + input.x * this.speed/1000 * multiplier * deltaT,
                 this.box.y + input.y * this.speed/1000 * multiplier * deltaT
             )
@@ -86,14 +88,18 @@ class Character extends GameObject{
         }
     }
 
+    attack(){
+        console.warn("unimplemented: attack()");
+    }
+
     hurt(damage, knockback){
         if(this.state != State.HURT && this.state != State.DEAD){
             this.health -= damage;
             if(this == game.player){
                 game.level.statistics.damageReceived += damage;
             }
-            x = this.box.x;
-            y = this.box.y;
+            var x = this.box.x;
+            var y = this.box.y;
             switch (knockback){
                 case Direction.NORTH:
                     y = this.box.y - damage;
@@ -120,11 +126,11 @@ class Character extends GameObject{
             if(this.health <= 0){
 
                 this.health = 0;
-                this.setState(State.DYING);
+                this.state = State.DYING;
                 return;
             
             }
-            this.setState(State.HURT);
+            this.state = State.HURT;
         }
     }
 
@@ -132,12 +138,11 @@ class Character extends GameObject{
             console.warn("unimplemented: getObjectsInView()");
             return [];
     }
-    getObjectsInRangeOfAttack = function(){
+    getObjectsInRangeOfAttack(){
             console.warn("unimplemented: getObjectsInRangeOfAttack()");
             return [];
     }
 }
-
 
 
 
@@ -166,13 +171,13 @@ function newGameCharacter(){
             if(Date.now()-this._stateStart < this._hurtDuration){
                 return
             }
-            this.setState(State.IDLE);
+            this.state = State.IDLE;
         }
         if(this.state == State.ATTACKING){
             if(Date.now()-this._stateStart < this._attackDuration){
                 return
             }
-            this.setState(State.IDLE);
+            this.state = State.IDLE;
         }           
         //read controller
         input = this.controller.read(this);
@@ -204,14 +209,14 @@ function newGameCharacter(){
 
             if (constrained && (this.box.x != constrained.x || this.box.y != constrained.y)){
                 if (this.state!=State.WALKING){
-                    this.state = State.WALKING;
+                    this.setState(State.WALKING);
                 }
                 this.box.x = constrained.x;
                 this.box.y = constrained.y;
             }
             else {
                 if (this.state!=State.IDLE){
-                    this.state = State.IDLE;
+                    this.setState(State.IDLE);
                 }
             }   
         }
@@ -253,7 +258,6 @@ function newGameCharacter(){
                 return;
             }
             this.setState(State.HURT);
-
         }
     };
 

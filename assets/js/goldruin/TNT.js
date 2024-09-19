@@ -2,7 +2,7 @@
 
 class TNT extends GameObject{
     room = null;
-    #sprite = null;
+    sprite = null;
     #shadow = null;
     constructor(){
         super();
@@ -16,8 +16,8 @@ class TNT extends GameObject{
 
             if(this.state != State.DEAD){       
                 var exp = null;
-                if(this.#sprite){
-                    exp = new Explosion(this.#sprite.location.x + this.#sprite.size.width/2, this.#sprite.location.y + this.#sprite.size.height/2)
+                if(this.sprite){
+                    exp = new Explosion(this.sprite.location.x + this.sprite.size.width/2, this.sprite.location.y + this.sprite.size.height/2)
                 } else {
                     exp = new Explosion(this.box.center().x, this.box.center().y);
                 }
@@ -96,9 +96,9 @@ class TNT extends GameObject{
         if(game.debug){
             this.box.render(game.screen, "#F00")
         }
-        if(!this.#sprite){
-            this.#sprite = new VC.Sprite(game.screen, images.dynamite, 384, 24, 24, 24, this.box.center().x-12, this.box.center().y-12);
-            this.#sprite.setAnimation(0,0);
+        if(!this.sprite){
+            this.sprite = new VC.Sprite(game.screen, images.dynamite, 384, 24, 24, 24, this.box.center().x-12, this.box.center().y-12);
+            this.sprite.setAnimation(0,0);
         }
            
         var x = this.box.center().x - 4;
@@ -122,16 +122,16 @@ class TNT extends GameObject{
             this.box.render(game.screen, "#800");
         }
 
-        this.#sprite.location.x = this.box.x;
-        this.#sprite.location.y = this.box.y - offset;
-        this.#sprite.render(deltaT); 
+        this.sprite.location.x = this.box.x;
+        this.sprite.location.y = this.box.y - offset;
+        this.sprite.render(deltaT); 
     }
 
     remove(){
         this.box.remove();
-        if(this.#sprite){
-            this.#sprite.remove();
-            this.#sprite = null;
+        if(this.sprite){
+            this.sprite.remove();
+            this.sprite = null;
         }
         if(this.#shadow){
             this.#shadow.remove();

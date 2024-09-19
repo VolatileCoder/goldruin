@@ -1,8 +1,8 @@
-//REQUIRES main, Statistics, Direction, State, Team
+//REQUIRES main, Statistics, Direction, State, Team, Adventurer
 class Game extends VC.Game {
     infoScreen = new VC.Screen("info", 0, 0, dimensions.width, dimensions.height);
     screen = new VC.Screen("main", 0, dimensions.infoHeight, dimensions.width, dimensions.height);
-    player =  newPlayer(newAdventurer(newInputController()))
+    player =  newPlayer(new Adventurer(newInputController()))
     statistics =  new Statistics(screen)
 
     deadObjects = []

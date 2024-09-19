@@ -1,6 +1,6 @@
 //REQUIRES GameObject, Plane, Layer, Direction, State
 class Torch extends GameObject{
-    #sprite = null;
+    sprite = null;
     #particles=[];
     intensity = 1;
     wall = Direction.NORTH;
@@ -18,8 +18,8 @@ class Torch extends GameObject{
         if(!this.nextFlicker || this.nextFlicker<Date.now()){
             this.intensity = Math.random();
             this.nextFlicker = Date.now() + Math.random() * 50 + 50;
-            if(this.#sprite){
-                this.#sprite.setFrame(0, Math.floor(this.intensity * 4) % 4, Math.floor(Math.random()*8) % 8)
+            if(this.sprite){
+                this.sprite.setFrame(0, Math.floor(this.intensity * 4) % 4, Math.floor(Math.random()*8) % 8)
             }
             if(this.intensity > .75){
                 var particle = game.screen.drawRect(this.box.center().x + Math.random() * 10 - 5, this.box.center().y + Math.random() * 10 - 5,2,2,"#fea","#000",0).attr("opacity",.75);
@@ -31,15 +31,15 @@ class Torch extends GameObject{
     };
     render(deltaT){
         this.box.render(game.screen, "#FFF");
-        if(this.#sprite==null){
-            this.#sprite = new VC.Sprite(game.screen, images.torch, 512,256, 64, 64,this.box.x-32, this.box.y-32);
-            this.#sprite.lastLocation.r = this.#sprite.location.r = this.wall * 90;
+        if(this.sprite==null){
+            this.sprite = new VC.Sprite(game.screen, images.torch, 512,256, 64, 64,this.box.x-32, this.box.y-32);
+            this.sprite.lastLocation.r = this.sprite.location.r = this.wall * 90;
             game.screen.onClear(()=>{
-                 this.#sprite = null;
+                 this.sprite = null;
             });
         }
 
-        this.#sprite.render()
+        this.sprite.render()
         this.#particles.forEach((p)=>{
             switch(this.wall) {
                 case Direction.NORTH:
@@ -66,9 +66,9 @@ class Torch extends GameObject{
         })
     };
     remove(){
-        if(this.#sprite) {
-            this.#sprite.remove();
-            this.#sprite = null;
+        if(this.sprite) {
+            this.sprite.remove();
+            this.sprite = null;
         }
         if(this.#particles){
             this.#particles.forEach((p)=>{p.remove();});
