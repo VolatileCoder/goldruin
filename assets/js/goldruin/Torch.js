@@ -1,8 +1,10 @@
 //REQUIRES GameObject, Plane, Layer, Direction, State
 class Torch extends GameObject{
+    #sprite = null;
+    #particles=[];
     intensity = 1;
     wall = Direction.NORTH;
-    nextFlicker = new Date(0)
+    nextFlicker = new Date(0);
     constructor(){
         super()
         this.box.width=0;
@@ -12,12 +14,9 @@ class Torch extends GameObject{
     }
 
     //TODO: Move Particle Effects to their own class; part of Engine, maybe?
-    #particles=[];
     move(deltaT){
         if(!this.nextFlicker || this.nextFlicker<Date.now()){
             this.intensity = Math.random();
-            this.offsetX = Math.random() * 7 - 3.5;
-            this.offsetY = Math.random() * 7 - 3.5;
             this.nextFlicker = Date.now() + Math.random() * 50 + 50;
             if(this.#sprite){
                 this.#sprite.setFrame(0, Math.floor(this.intensity * 4) % 4, Math.floor(Math.random()*8) % 8)
@@ -28,8 +27,8 @@ class Torch extends GameObject{
                 this.#particles.push(particle);
             }
         }
+
     };
-    #sprite = null;
     render(deltaT){
         this.box.render(game.screen, "#FFF");
         if(this.#sprite==null){
