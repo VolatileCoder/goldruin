@@ -148,7 +148,7 @@ class Snake extends Character {
         var startHealth=this.health;
         super.hurt(damage, knockback);
         if(startHealth>0 && this.health<=0){
-            game.level.statistics.kingCobrasKilled++;
+            game.level.statistics.snakesKilled++;
             game.level.statistics.enemiesKilled++;
             sfx.snakeDeath();
         }
