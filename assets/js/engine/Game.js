@@ -3,11 +3,11 @@
 VC.Game = class{
     #state = VC.GameState.PAUSED;
 
-    OnPreRender(deltaT){}
-    OnRender(deltaT){}
-    OnPostRender(deltaT){}
-    OnPlay(){}
-    OnPause(){}
+    onPreRender(deltaT){}
+    onRender(deltaT){}
+    onPostRender(deltaT){}
+    onPlay(){}
+    onPause(){}
 
     #looping = false;
     _loop(lastTime){
@@ -19,23 +19,23 @@ VC.Game = class{
         //if(deltaT>1000) deltaT == 1000;
         if(this.#state == VC.GameState.RUNNING){
             //this.#preRender(deltaT)
-            this.OnPreRender(deltaT);
-            this.OnRender(deltaT);
-            this.OnPostRender(deltaT);
+            this.onPreRender(deltaT);
+            this.onRender(deltaT);
+            this.onPostRender(deltaT);
         }
         window.setTimeout(()=>{this._loop(startTime);},0);
     }
     
-    Play(){
-        this.OnPlay();
+    play(){
+        this.onPlay();
         this.#state = VC.GameState.RUNNING;
         if(!this.#looping){
             this._loop(Date.now());
         }
     }
 
-    Pause(){
-        this.OnPause();
+    pause(){
+        this.onPause();
         this.#state = VC.GameState.PAUSED;
     }
 }

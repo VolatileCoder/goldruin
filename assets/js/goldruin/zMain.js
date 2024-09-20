@@ -20,7 +20,7 @@ VC.Client.OnReady(()=>{
     
     game.debug = DEBUG;
     titleScreen ();
-    game.Play();
+    game.play();
 })
 
 
