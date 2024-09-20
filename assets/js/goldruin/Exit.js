@@ -85,9 +85,9 @@ class Exit extends GameObject {
     }
 
     onTrip(){
-       game.Pause()
-       setTimeout(()=>{
-        game.screen.fadeTo(SCREENBLACK, exitLevel);
-       },50);
+        game.pause()
+        setTimeout(()=>{
+            game.screen.fadeTo(SCREENBLACK, exitLevel);
+        },50);
     }
 }
