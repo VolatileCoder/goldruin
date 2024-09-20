@@ -54,6 +54,7 @@ class Game extends VC.Game {
         }
         if(this.level){
             //render Info
+            this.level.statistics.timeSpent+=deltaT;
             renderInfo();
         }
         if (this.player && this.player.controller){
