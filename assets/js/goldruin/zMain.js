@@ -6,7 +6,7 @@ VC.Client.OnReady(()=>{
     game = new Game();
 
     game.screen.canvas.addEventListener("touchstart",function(e){
-        Client._orientation = Orientation.PORTRAIT;
+        VC.Client._orientation = VC.Orientation.PORTRAIT;
         changeOrientation();
     });
     changeOrientation();

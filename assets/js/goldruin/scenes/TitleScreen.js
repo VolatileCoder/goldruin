@@ -78,7 +78,7 @@ class TitleScreen extends VC.Scene {
                                     this.#prompt.animate({opacity:1},100, "elastic",()=>{
                                     });
                                 });
-                                this.transitionTo = LevelFactory.Construct(this.#k ? 4 : 0);
+                                this.transitionTo = new NewGameScene(this.#k ? 4 : 0, 30);
                             });
                         });
                     });

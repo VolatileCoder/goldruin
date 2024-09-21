@@ -7,7 +7,7 @@ class EndLevelSummary extends Room {
         this.statistics = statistics;
         this.box.x = this.wallHeight;
         this.box.y = Math.round((dimensions.width - this.box.height - this.wallHeight*2) / 2) + this.wallHeight;
-        this.palette = JSON.parse(JSON.stringify(game.level.number % 5 == 4 ? getWorldPalette(game.level.world + 1) : game.level.palette));
+        this.palette = JSON.parse(JSON.stringify(game.level.number % 5 == 4 ? LevelFactory.getWorldPalette(game.level.world + 1) : game.level.palette));
         this.palette.clipColor = SCREENBLACK;
 
         var exit = new Exit(this)

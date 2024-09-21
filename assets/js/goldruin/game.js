@@ -50,6 +50,10 @@ class Game extends VC.Game {
             this.currentScene.postRender();
         
             if(this.currentScene.transitionTo && this.currentScene.transitionTo instanceof VC.Scene){
+                var transitionTo = this.currentScene.transitionTo;
+                while (transitionTo.transitionTo){
+                    transitionTo = transitionTo.transitionTo;
+                }
                 this.currentScene.postDisplay();
                 
                 var fadeColor = SCREENBLACK; 
@@ -58,7 +62,7 @@ class Game extends VC.Game {
                 }
                 this.pause();
                 this.screen.fadeTo(fadeColor, ()=>{
-                    this.currentScene = this.currentScene.transitionTo;
+                    this.currentScene = transitionTo;
                     this.currentScene.preDisplay();
                     //render one frame
                     this.onPreRender(0);

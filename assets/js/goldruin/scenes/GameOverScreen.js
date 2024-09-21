@@ -30,13 +30,8 @@ class GameOverScreen extends VC.Scene{
             var c = game.inputController.read();
             if(c.a==1){
                 //TODO: Move to NewGameScene
-                game.player.maxHealth = 30;
-                game.player.health = game.player.maxHealth;
-                game.player.state = State.IDLE;
-                game.player.gold = 0;
-                game.player.tntCount = 5;
-                game.statistics = new Statistics(game.screen);
-                this.transitionTo = LevelFactory.Construct(0);
+                this.transitionTo = new NewGameScene(0, 30);
+
             }
         }
     }

@@ -449,6 +449,7 @@ class LevelFactory {
                             torch.wall = wall;
                             break;
                     }
+                    new TorchLightEffect(torch);
                 }
             }
         })
