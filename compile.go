@@ -58,35 +58,38 @@ func (c *Compiler) processFile(file string) {
 		c.FinalOrder = append(c.FinalOrder, file)
 	}
 }
-func processFolder(dir string) {
-
-	var p Compiler
-	p.Contents = make(map[string]string)
+func (c *Compiler) processFolder(dir string, depth int) {
 
 	items, _ := ioutil.ReadDir(dir)
 	for _, item := range items {
+		if item.IsDir() {
+			c.processFolder(path.Join(dir, item.Name()), depth+1)
+		}
 		if !item.IsDir() && path.Ext(item.Name()) == ".js" {
 			data, _ := os.ReadFile(path.Join(dir, item.Name()))
 
 			contents := strings.TrimSpace(string(data))           // Remove leading/trailing whitespace
 			contents = strings.ReplaceAll(contents, "\uFEFF", "") // Remove BOM if present
 
-			p.Contents[string(item.Name()[:len(item.Name())-3])] = contents
+			c.Contents[string(item.Name()[:len(item.Name())-3])] = contents
 		}
 	}
-	p.Reorder()
+	if depth == 0 {
+		c.Reorder()
 
-	file, _ := os.Create(dir + ".js")
-	defer file.Close()
+		file, _ := os.Create(dir + ".js")
+		defer file.Close()
 
-	for _, path := range p.FinalOrder {
-		fmt.Println(path)
-		lines := strings.Split(p.Contents[path], "\n")
-		for _, line := range lines {
-			if !strings.Contains(line, "//REQUIRES") {
-				fmt.Fprintln(file, line)
+		for _, path := range c.FinalOrder {
+			fmt.Println(path)
+			lines := strings.Split(c.Contents[path], "\n")
+			for _, line := range lines {
+				if !strings.Contains(line, "//REQUIRES") {
+					fmt.Fprintln(file, line)
+				}
 			}
 		}
+
 	}
 }
 
@@ -94,7 +97,10 @@ func main() {
 	dirs := os.Args[1:]
 	for _, dir := range dirs {
 		if folderExists(dir) {
-			processFolder(dir)
+
+			var p Compiler
+			p.Contents = make(map[string]string)
+			p.processFolder(dir, 0)
 		}
 	}
 }

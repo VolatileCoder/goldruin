@@ -26,8 +26,7 @@ class Statistics {
     tntCollected = 0;
     tntThrown = 0; 
 
-    constructor(screen){
-        this.#screen = screen;
+    constructor(){
     }
     add(s){
         this.damageDealt += s.damageDealt;
@@ -55,9 +54,9 @@ class Statistics {
         this.tntThrown+=s.tntThrown;
     }
 
-    render(title, box){
+    render(screen, title, box){
         var y = box.y + 64;
-        var title = this.#screen.text(box.center().x, y,title)
+        var title = screen.text(box.center().x, y,title)
         title.attr({ "font-size": "48px", "font-family": "monospace", "fill": "#FFF", "text-anchor": "middle", "font-weight": "bold"});
 
         var x1 = box.x + 40;
@@ -72,68 +71,68 @@ class Statistics {
         var stats=[];
 
         y += 64;
-        stats.push(this.#screen.text(x1, y, "LEVELS CLEARED:").attr(attrHeaderLeft))
+        stats.push(screen.text(x1, y, "LEVELS CLEARED:").attr(attrHeaderLeft))
         
-        stats.push(this.#screen.text(x2, y,  Format.numberWithCommas(game.level.number + (game.player.state==State.DEAD ? 0 : 1))).attr(attrHeaderRight));
+        stats.push(screen.text(x2, y,  Format.numberWithCommas(this.levelNumber + (game.player.state==State.DEAD ? 0 : 1))).attr(attrHeaderRight));
 
         y += 64;
-        stats.push(this.#screen.text(x1, y, "TIME SPENT:").attr(attrHeaderLeft));
-        stats.push(this.#screen.text(x2, y,  Format.msToTime(this.timeSpent)).attr(attrHeaderRight));
+        stats.push(screen.text(x1, y, "TIME SPENT:").attr(attrHeaderLeft));
+        stats.push(screen.text(x2, y,  Format.msToTime(this.timeSpent)).attr(attrHeaderRight));
         
         y += 64;
-        stats.push(this.#screen.text(x1, y, "ROOMS DISCOVERED:").attr(attrHeaderLeft));
-        stats.push(this.#screen.text(x2, y,  Format.numberWithCommas(this.roomsVisited) + " / " + Format.numberWithCommas(this.roomsSpawned)).attr(attrHeaderRight));
+        stats.push(screen.text(x1, y, "ROOMS DISCOVERED:").attr(attrHeaderLeft));
+        stats.push(screen.text(x2, y,  Format.numberWithCommas(this.roomsVisited) + " / " + Format.numberWithCommas(this.roomsSpawned)).attr(attrHeaderRight));
         
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"DOORS UNLOCKED:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.doorsUnlocked) + " / " + Format.numberWithCommas(this.doorsSpawned)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"DOORS UNLOCKED:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.doorsUnlocked) + " / " + Format.numberWithCommas(this.doorsSpawned)).attr(attrStatRight));
 
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"KEYS COLLECTED:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.keysCollected) + " / " + Format.numberWithCommas(this.keysSpawned)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"KEYS COLLECTED:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.keysCollected) + " / " + Format.numberWithCommas(this.keysSpawned)).attr(attrStatRight));
 
         y += 64;
-        stats.push(this.#screen.text(x1, y,"CHESTS OPENED:").attr(attrHeaderLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.chestsOpened) + " / " + Format.numberWithCommas(this.chestsSpawned)).attr(attrHeaderRight));
+        stats.push(screen.text(x1, y,"CHESTS OPENED:").attr(attrHeaderLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.chestsOpened) + " / " + Format.numberWithCommas(this.chestsSpawned)).attr(attrHeaderRight));
         
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"GOLD COLLECTED:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.goldCollected)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"GOLD COLLECTED:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.goldCollected)).attr(attrStatRight));
 
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"HEARTS COLLECTED:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.heartsCollected)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"HEARTS COLLECTED:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.heartsCollected)).attr(attrStatRight));
         
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"TNT COLLECTED:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.tntCollected)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"TNT COLLECTED:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.tntCollected)).attr(attrStatRight));
 
         y += 64;
-        stats.push(this.#screen.text(x1, y,"ENEMIES KILLED:").attr(attrHeaderLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.enemiesKilled) + " / " + Format.numberWithCommas(this.enemiesSpawned)).attr(attrHeaderRight));
+        stats.push(screen.text(x1, y,"ENEMIES KILLED:").attr(attrHeaderLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.enemiesKilled) + " / " + Format.numberWithCommas(this.enemiesSpawned)).attr(attrHeaderRight));
 
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"DAMAGE DEALT:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.damageDealt)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"DAMAGE DEALT:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.damageDealt)).attr(attrStatRight));
 
         y += 40;
-        stats.push(this.#screen.text(x1 + indent, y,"DAMAGE RECEIVED:").attr(attrStatLeft));
-        stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.damageReceived)).attr(attrStatRight));
+        stats.push(screen.text(x1 + indent, y,"DAMAGE RECEIVED:").attr(attrStatLeft));
+        stats.push(screen.text(x2, y, Format.numberWithCommas(this.damageReceived)).attr(attrStatRight));
 
         if(this.caveSpidersSpawned>0){       
             y += 40;
-            stats.push(this.#screen.text(x1 + indent, y,"SPIDERS SQUASHED:").attr(attrStatLeft));
-            stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.caveSpidersKilled) + " / " + Format.numberWithCommas(this.caveSpidersSpawned)).attr(attrStatRight));
+            stats.push(screen.text(x1 + indent, y,"SPIDERS SQUASHED:").attr(attrStatLeft));
+            stats.push(screen.text(x2, y, Format.numberWithCommas(this.caveSpidersKilled) + " / " + Format.numberWithCommas(this.caveSpidersSpawned)).attr(attrStatRight));
         }
         if(this.swordSkeletonsSpawned>0){       
             y += 40;
-            stats.push(this.#screen.text(x1 + indent, y,"SKELETONS SMASHED:").attr(attrStatLeft));
-            stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.swordSkeletonsKilled) + " / " + Format.numberWithCommas(this.swordSkeletonsSpawned)).attr(attrStatRight));
+            stats.push(screen.text(x1 + indent, y,"SKELETONS SMASHED:").attr(attrStatLeft));
+            stats.push(screen.text(x2, y, Format.numberWithCommas(this.swordSkeletonsKilled) + " / " + Format.numberWithCommas(this.swordSkeletonsSpawned)).attr(attrStatRight));
         }
         if(this.snakesSpawned>0){       
             y += 40;
-            stats.push(this.#screen.text(x1 + indent, y,"SNAKES STOMPED:").attr(attrStatLeft));
-            stats.push(this.#screen.text(x2, y, Format.numberWithCommas(this.snakesKilled) + " / " + Format.numberWithCommas(this.snakesSpawned)).attr(attrStatRight));
+            stats.push(screen.text(x1 + indent, y,"SNAKES STOMPED:").attr(attrStatLeft));
+            stats.push(screen.text(x2, y, Format.numberWithCommas(this.snakesKilled) + " / " + Format.numberWithCommas(this.snakesSpawned)).attr(attrStatRight));
         }
 
         var ms = 0;

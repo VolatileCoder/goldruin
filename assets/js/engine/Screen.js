@@ -75,11 +75,15 @@ VC.Screen = class {
     }
 
     fadeTo(color, callback){
-        this.drawRect(0,0,this.#width, this.#width, color, color, 1).attr({opacity: 0}).animate({opacity:1}, 350, null, callback);
+        var rect = this.drawRect(0,0,this.#width, this.#width, color, color, 0)
+        rect.attr({opacity: 0})
+        rect.animate({opacity:1}, 350, null, ()=>{rect.remove(); callback()});
     }
     
     fadeInFrom(color, callback){
-        this.drawRect(0,0,this.#width, this.#width, color, color, 0).attr({opacity: 1}).animate({opacity:0}, 350, null, callback);
+        var rect = this.drawRect(0,0,this.#width, this.#width, color, color, 0)
+        rect.attr({opacity: 1})
+        rect.animate({opacity:0}, 350, null, ()=>{rect.remove(); callback()});
     }
     
 

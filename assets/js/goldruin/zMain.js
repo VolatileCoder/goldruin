@@ -19,7 +19,6 @@ VC.Client.OnReady(()=>{
     });
     
     game.debug = DEBUG;
-    titleScreen ();
     game.play();
 })
 

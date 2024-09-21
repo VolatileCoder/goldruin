@@ -27,15 +27,15 @@ VC.Game = class{
     }
     
     play(){
-        this.onPlay();
         this.#state = VC.GameState.RUNNING;
+        this.onPlay();
         if(!this.#looping){
             this._loop(Date.now());
         }
     }
 
     pause(){
-        this.onPause();
         this.#state = VC.GameState.PAUSED;
+        this.onPause();
     }
 }
