@@ -61,6 +61,12 @@ class Game extends VC.Game {
                     fadeColor = "#FFF"
                 }
                 this.pause();
+                
+                if (this.player.sprite) {
+                    this.player.sprite.scale = 1;
+                }
+                this.player.speed = 150;
+                
                 this.screen.fadeTo(fadeColor, ()=>{
                     this.currentScene = transitionTo;
                     this.currentScene.preDisplay();

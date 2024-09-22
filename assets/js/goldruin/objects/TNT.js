@@ -12,7 +12,11 @@ class TNT extends GameObject{
 
         window.setTimeout(()=>{
             if(this.room == null){
-                this.room = game.level.currentRoom;
+                if(game && game.level && game.level.currentRoom){
+                    this.room = game.level.currentRoom;
+                }else{
+                    return;
+                }
             }
 
             if(this.state != State.DEAD){       

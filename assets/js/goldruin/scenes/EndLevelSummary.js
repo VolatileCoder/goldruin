@@ -16,8 +16,6 @@ class EndLevelSummary extends Room {
         var els = this;
         exit.onTrip = function(){
             game.player.keys = [];
-            game.player.sprite.scale = 1;
-            game.player.speed = 150;
             els.transitionTo = LevelFactory.Construct(nextLevel);
         }; 
 

@@ -83,8 +83,6 @@ class Exit extends GameObject {
 
     onTrip(){
         if(game.level){
-            game.player.speed = 150;
-            game.player.scale = 1;
             game.level.statistics.roomsVisited = filter(game.level.rooms,(r)=>{return r.visited}).length
             game.level.statistics.roomsSpawned = game.level.rooms.length
             game.statistics.add(game.level.statistics);    

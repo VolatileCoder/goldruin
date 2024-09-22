@@ -11,7 +11,9 @@ class SpikeTrap extends GameObject{
     }
     attack(){
         this.state = State.ATTACKING;
-        sfx.floorSpikes(this);
+        if(game && game.level && this.room==game.level.currentRoom){
+            sfx.floorSpikes(this);
+        }
         this.box.width = 62;
         this.box.height = 58;
         this.room.objects.forEach((o)=>{
@@ -21,31 +23,22 @@ class SpikeTrap extends GameObject{
                     o.hurt(5, Direction.NORTH)
                     var sb = new Starburst(this.room);
                     sb.box = rect
-                    this.room.objects.push(sb);
                 }
             }
         })
     }
     move(deltaT){
-        if(this.state == 0 && Date.now()-this._stateStart > 3000){
+        if(this.state == State.IDLE && Date.now()-this._stateStart > 3000){
             //WARN
             this.state = State.WALKING;
-        }else if(this.state ==1 && Date.now()-this._stateStart > 1000){
+        }else if(this.state == State.WALKING && Date.now()-this._stateStart > 1000){
             //ATTACK!
            this.attack();
 
-        } else if (this.#sprite && this.#sprite.animation.series == State.ATTACKING){
-            //RESET TRAP
-            if (this.#sprite.animation.frame == 4){
-                this.box.width = 0;
-                this.box.height = 0;
-                    
-            } else if (this.#sprite.animation.frame == 7){
-                this.box.width = 0;
-                this.box.height = 0;
-                this.state = State.IDLE;
-            }
-            
+        } else if (this.state == State.ATTACKING && Date.now()-this._stateStart>800) {
+            this.state = State.IDLE;
+            this.box.width = 0;
+            this.box.height = 0;    
         }
     }
 
@@ -56,8 +49,20 @@ class SpikeTrap extends GameObject{
                 this.#sprite = null;
             })
         }
-        this.#sprite.setAnimation(0,this.state)
-        this.#sprite.render()
+
+        if(this.state == State.IDLE){
+            //WARN
+            this.#sprite.setFrame(0, State.IDLE, 0);
+        }else if(this.state == State.WALKING){
+            //ATTACK!
+            this.#sprite.setFrame(0, State.WALKING, 0);
+        } else if (this.state == State.ATTACKING) {
+            var frame = constrain(0, Math.floor((Date.now()-this._stateStart)/100), 8);
+            console.log(frame);
+            this.#sprite.setFrame(0, State.ATTACKING, frame);
+        }
+
+        this.#sprite.render();
     }
 
     remove(){
