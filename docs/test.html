@@ -1,0 +1,19 @@
+<html>
+    <script src="http://unpkg.com/tone"></script>
+    <script>
+        function test() {
+        Tone.start();
+      var uri = "start.mp3"
+      var player = new Tone.Player(uri).toDestination()
+      //var panVol = new Tone.PanVol(-1, 0).toDestination()
+      //player.connect(panVol)
+      player.autostart = true
+    }
+    
+    </script>
+    <body>
+<button onclick="test()" style="color: red">
+CLICK ME TO TEST
+</button>
+</body>
+</html>
