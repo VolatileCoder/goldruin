@@ -99,7 +99,9 @@ class TitleScreen extends VC.Scene {
         if(this.#rendered == false){
             screen.drawRect(0,0,dimensions.width, dimensions.width, SCREENBLACK, SCREENBLACK, 0);
             screen.image(images.logo, 150, 150, 600, 320);
-            this.#prompt = screen.text(dimensions.width/2, dimensions.width-250, "PRESS " + (VC.Client.orientation == VC.Orientation.PORTRAIT ? "FIRE" : "SPACE BAR") + " TO BEGIN").attr({ "font-size": "48px", "font-family": "monospace", "fill": "#FFF", "text-anchor": "middle", "font-weight": "bold"});  
+            this.#prompt = screen.text(dimensions.width/2, dimensions.width-300, "PRESS " + (VC.Client.orientation == VC.Orientation.PORTRAIT ? "FIRE" : "SPACE BAR") + " TO BEGIN").attr({ "font-size": "48px", "font-family": "monospace", "fill": "#FFF", "text-anchor": "middle", "font-weight": "bold"});  
+            screen.text(dimensions.width/2, dimensions.width-220, "((- In Stereo -))").attr({ "font-size": "22px", "font-family": "monospace", "fill": "#DDD", "text-anchor": "middle", "font-weight": "bold"}); 
+            screen.text(dimensions.width/2, dimensions.width-190, "Where Available").attr({ "font-size": "22px", "font-family": "monospace", "fill": "#DDD", "text-anchor": "middle", "font-weight": "bold"});   
             screen.text(dimensions.width/2, dimensions.width-133, VERSION).attr({ "font-size": "28px", "font-family": "monospace", "fill": "#888", "text-anchor": "middle", "font-weight": "bold"});  
             this.#rendered = true
         }
