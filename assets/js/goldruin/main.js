@@ -1,5 +1,5 @@
 //REQUIRES Direction, Team, State, Layer, Plane, GameObject, Character, InvisibleObject, Starburst, TNT, Explosion, Torch, TorchLightEffect, Exit, SpikeTrap, ScorchMark, Treasure, TreasureChest, CaveSpider, Snake, Player, Format, AutoController
-const VERSION = "v3.24.09.25.01 BETA"
+const VERSION = "v3.24.09.25.02 BETA"
 const DEBUG = false
 
 const SCREENBLACK = "#080808";
@@ -192,10 +192,10 @@ function pause(){
         game.pause();
         text = game.screen.text(dimensions.width/2, dimensions.infoHeight * 5,"- PAUSED -")
         text.attr({ "font-size": "64px", "font-family": "monospace", "fill": "#FFF", "text-anchor": "center"});
-        Howler.mute(true);
+        //Howler.mute(true);
         waitForAttack(()=>{
             game.play();
-            Howler.mute(false);
+            //Howler.mute(false);
             text.remove();
         });
     }
