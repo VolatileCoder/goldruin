@@ -156,7 +156,7 @@ class LevelFactory {
             maxKey = maxRegion;
         }
         
-        exitRoom.box.height = constrain((constants.roomMinHeightInBricks+2) *constants.brickWidth, exitRoom.box.height, constants.roomMaxHeightInBricks * constants.brickWidth)
+        exitRoom.box.height = VC.Math.constrain((constants.roomMinHeightInBricks+2) *constants.brickWidth, exitRoom.box.height, constants.roomMaxHeightInBricks * constants.brickWidth)
 
         exitRoom.exit = 1;
 
@@ -305,7 +305,7 @@ class LevelFactory {
                 var roomArea = r.box.width * r.box.height;
                 var maxNumberOfObjects = Math.round((roomArea-minArea) / thresholds)
                 var minNumberOfObjects = Math.round(Math.round((roomArea-minArea) / thresholds)/2)
-                var enemies = constrain(minNumberOfObjects, Math.round(maxNumberOfObjects * Math.random()), maxNumberOfObjects)
+                var enemies = VC.Math.constrain(minNumberOfObjects, Math.round(maxNumberOfObjects * Math.random()), maxNumberOfObjects)
                 for(var i=0; i<enemies; i++){
                     
                     switch(Math.floor((Math.random()*3)%3)) {
@@ -326,7 +326,7 @@ class LevelFactory {
                     
                     level.statistics.enemiesSpawned++;
                 }
-                var chests = constrain(minNumberOfObjects, Math.round(maxNumberOfObjects * Math.random()), maxNumberOfObjects)
+                var chests = VC.Math.constrain(minNumberOfObjects, Math.round(maxNumberOfObjects * Math.random()), maxNumberOfObjects)
                 for(var i=0; i<chests; i++){
                     if (!r.keyroom){
                         r.spawn(new TreasureChest(r, Treasure.RANDOM));

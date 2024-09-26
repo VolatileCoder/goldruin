@@ -4,6 +4,8 @@ class TitleScreen extends VC.Scene {
     #prompt = null;
     #torch1 = null;
     #torch2 = null;
+    #volume1 = null;
+    #volume2 = null;
     
     #kcode = "UUDDLRLR";
     #seq = "";
@@ -26,6 +28,7 @@ class TitleScreen extends VC.Scene {
         this.#torch2.box.y = 375;
         this.#torch2.box.x = 800;
         this.#torch1.wall = Direction.NORTH;
+        
     }
 
     preDisplay(){
@@ -100,10 +103,23 @@ class TitleScreen extends VC.Scene {
             screen.drawRect(0,0,dimensions.width, dimensions.width, SCREENBLACK, SCREENBLACK, 0);
             screen.image(images.logo, 150, 150, 600, 320);
             this.#prompt = screen.text(dimensions.width/2, dimensions.width-300, "PRESS " + (VC.Client.orientation == VC.Orientation.PORTRAIT ? "FIRE" : "SPACE BAR") + " TO BEGIN").attr({ "font-size": "48px", "font-family": "monospace", "fill": "#FFF", "text-anchor": "middle", "font-weight": "bold"});  
-            screen.text(dimensions.width/2, dimensions.width-220, "((- In Stereo -))").attr({ "font-size": "22px", "font-family": "monospace", "fill": "#DDD", "text-anchor": "middle", "font-weight": "bold"}); 
+            screen.text(dimensions.width/2, dimensions.width-220, "In Stereo").attr({ "font-size": "22px", "font-family": "monospace", "fill": "#DDD", "text-anchor": "middle", "font-weight": "bold"}); 
             screen.text(dimensions.width/2, dimensions.width-190, "Where Available").attr({ "font-size": "22px", "font-family": "monospace", "fill": "#DDD", "text-anchor": "middle", "font-weight": "bold"});   
             screen.text(dimensions.width/2, dimensions.width-133, VERSION).attr({ "font-size": "28px", "font-family": "monospace", "fill": "#888", "text-anchor": "middle", "font-weight": "bold"});  
             this.#rendered = true
+            
+            this.#volume1 = new VC.Sprite(screen, images.volume, 500, 25, 50, 25, dimensions.width/2 + 65, dimensions.width-232);
+            this.#volume1.setAnimation(0, 0);
+            this.#volume2 = new VC.Sprite(screen, images.volume, 500, 25, 50, 25, dimensions.width/2 - 115, dimensions.width-233);
+            this.#volume2.setAnimation(0, 0);
+            this.#volume2.location.r = this.#volume2.lastLocation.r = 180;
+        }
+
+        if (this.#volume1.animation.frame!=9){
+            this.#volume1.render(deltaT);
+        }
+        if (this.#volume2.animation.frame!=9){
+            this.#volume2.render(deltaT);
         }
 
         if(this.#torch1){

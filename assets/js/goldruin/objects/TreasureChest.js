@@ -64,7 +64,7 @@ class TreasureChest extends GameObject{
                 setTimeout(()=>{this.playSound(1,SoundEffects.KEY, .7, false);},400);
                 
             } else if (this.#content == Treasure.HEART){
-                game.player.health = constrain(0, game.player.health + 10, game.player.maxHealth);
+                game.player.health = VC.Math.constrain(0, game.player.health + 10, game.player.maxHealth);
                 game.level.statistics.heartsCollected++;
                 setTimeout(()=>{this.playSound(1,SoundEffects.HEART, .7, false);},400);
             } else if (this.#content == Treasure.TNT){
@@ -113,7 +113,7 @@ class TreasureChest extends GameObject{
             
             var offset = (100/1000) * deltaT;
             this.#treasureOffset += offset;
-            var opacity = constrain(0,1-(this.#treasureOffset/100), 1);
+            var opacity = VC.Math.constrain(0,1-(this.#treasureOffset/100), 1);
             this.#contentSprite.opacity = opacity;    
             if(opacity>0){
                 this.#contentSprite.location.y -= offset;

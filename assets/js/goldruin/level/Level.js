@@ -126,13 +126,13 @@ class Level extends VC.Scene {
                     var d = VC.Trig.distance(pc.x, pc.y, dc.x, dc.y)
                     
                     var maxDistance = 300;
-                    d = constrain(0, d, maxDistance);
+                    d = VC.Math.constrain(0, d, maxDistance);
                     
-                    n.volume =  .66 - ((d / maxDistance) * .45);
-
+                    n.volume =  VC.Math.inversePercentToRange(d/maxDistance, .1, .66);
+                    console.log(n.volume);
                     n.preRender(deltaT);
                 }
-            })
+            });
         }
     }
 

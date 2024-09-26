@@ -108,7 +108,7 @@ class GameObject{
 
     playSound(channel, uri, volume, loop){
         if(!this.#removed){
-            var v = constrain(0, volume, 1);
+            var v = VC.Math.constrain(0, volume, 1);
             this.getAudioChannel(channel).play(uri, volume * game.data.sfxVolume, loop);    
         }
     }

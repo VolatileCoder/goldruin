@@ -57,7 +57,7 @@ class SpikeTrap extends GameObject{
             //ATTACK!
             this.#sprite.setFrame(0, State.WALKING, 0);
         } else if (this.state == State.ATTACKING) {
-            var frame = constrain(0, Math.floor((Date.now()-this._stateStart)/100), 8);
+            var frame = VC.Math.constrain(0, Math.floor((Date.now()-this._stateStart)/100), 8);
             this.#sprite.setFrame(0, State.ATTACKING, frame);
         }
 

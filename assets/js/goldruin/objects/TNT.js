@@ -119,7 +119,7 @@ class TNT extends GameObject{
         var msPassed = new Date() - this._stateStart;
         var perc = 1-(msPassed/2000);
         var factor = Math.PI - ((Math.PI-1)*(perc));
-        var offset = constrain(0, 50 * Math.sin(factor*1.5), 50)
+        var offset = VC.Math.constrain(0, 50 * Math.sin(factor*1.5), 50)
 
         if(DEBUG){
             this.box.render(screen, "#800");

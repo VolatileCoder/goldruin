@@ -422,8 +422,8 @@ class Room extends VC.Scene {
         var y1 = gameObject.box.y;
         var constrained = new VC.Box(gameObject.box.x, gameObject.box.y, gameObject.box.width, gameObject.box.height);
         //game.player.box
-        constrained.x = constrain(this.box.x, x2, this.box.x + this.box.width - gameObject.box.width);
-        constrained.y = constrain(this.box.y, y2, this.box.y + this.box.height - gameObject.box.height);
+        constrained.x = VC.Math.constrain(this.box.x, x2, this.box.x + this.box.width - gameObject.box.width);
+        constrained.y = VC.Math.constrain(this.box.y, y2, this.box.y + this.box.height - gameObject.box.height);
         
         
         //constrain against all other objects
@@ -509,7 +509,7 @@ class Room extends VC.Scene {
                 switch(door.wall){  
                     case Direction.NORTH:
                         if(gameObject.box.inside(door.box) ){
-                            constrained.y = constrain(door.box.y+constants.doorFrameThickness, y2, constrained.y);
+                            constrained.y = VC.Math.constrain(door.box.y+constants.doorFrameThickness, y2, constrained.y);
                             if (gameObject.box.collidesWith(door.trip)){
                                 game.level.moveToNextRoom(gameObject, Direction.NORTH)
                                 return gameObject.box;
@@ -518,7 +518,7 @@ class Room extends VC.Scene {
                         break;
                     case Direction.EAST:
                         if(gameObject.box.inside(door.box) ){
-                            constrained.x = constrain(constrained.x, x2, door.box.x + door.box.width - constants.doorFrameThickness);
+                            constrained.x = VC.Math.constrain(constrained.x, x2, door.box.x + door.box.width - constants.doorFrameThickness);
                             if (gameObject.box.collidesWith(door.trip)){
                                 game.level.moveToNextRoom(gameObject, Direction.EAST)
                                 return gameObject.box;
@@ -527,7 +527,7 @@ class Room extends VC.Scene {
                         break;
                     case Direction.SOUTH:
                         if(gameObject.box.inside(door.box) ){
-                            constrained.y = constrain(constrained.y, y2, door.box.y + door.box.height - constants.doorFrameThickness);
+                            constrained.y = VC.Math.constrain(constrained.y, y2, door.box.y + door.box.height - constants.doorFrameThickness);
                             if (gameObject.box.collidesWith(door.trip)){
                                 game.level.moveToNextRoom(gameObject, Direction.SOUTH)
                                 return gameObject.box;
@@ -536,7 +536,7 @@ class Room extends VC.Scene {
                         break
                     case Direction.WEST:
                         if(gameObject.box.inside(door.box) ){
-                            constrained.x = constrain(door.box.x+constants.doorFrameThickness, x2, constrained.y);
+                            constrained.x = VC.Math.constrain(door.box.x+constants.doorFrameThickness, x2, constrained.y);
                             if (gameObject.box.collidesWith(door.trip)){
                                 game.level.moveToNextRoom(gameObject, Direction.WEST)
                                 return gameObject.box;

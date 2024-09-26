@@ -244,32 +244,32 @@ class Adventurer extends Character{
             case Direction.NORTH: 
                 this.#whip.box.reset(
                     Math.round(this.box.x + this.box.width / 2 - this.#whip.thickness / 2),
-                    constrain((this.room.box.y - this.room.wallHeight / 2) ,this.box.y - this.#whip.length, this.box.y),
+                    VC.Math.constrain((this.room.box.y - this.room.wallHeight / 2) ,this.box.y - this.#whip.length, this.box.y),
                     this.#whip.thickness,
-                    constrain(0, this.#whip.length, this.box.y - this.room.box.y + this.room.wallHeight / 2)
+                    VC.Math.constrain(0, this.#whip.length, this.box.y - this.room.box.y + this.room.wallHeight / 2)
                 );
                 break;
             case Direction.EAST:
                 this.#whip.box.reset(
-                    constrain(this.box.x + this.box.width,this.box.x + this.box.width,this.room.box.x+this.room.box.width + this.room.wallHeight/2),
+                    VC.Math.constrain(this.box.x + this.box.width,this.box.x + this.box.width,this.room.box.x+this.room.box.width + this.room.wallHeight/2),
                     Math.round(this.box.y - 25 + this.box.height/2 - this.#whip.thickness/2),
-                    constrain(0, this.#whip.length, (this.room.box.x + this.room.box.width + this.room.wallHeight/2) - (this.box.x + this.box.width)),
+                    VC.Math.constrain(0, this.#whip.length, (this.room.box.x + this.room.box.width + this.room.wallHeight/2) - (this.box.x + this.box.width)),
                     this.#whip.thickness
                 );
                 break;
             case Direction.SOUTH:
                 this.#whip.box.reset(
                     Math.round(this.box.x + this.box.width/2 - this.#whip.thickness/2),
-                    constrain(this.box.y + this.box.height,this.box.y + this.box.height,this.room.box.y+this.room.box.height),
+                    VC.Math.constrain(this.box.y + this.box.height,this.box.y + this.box.height,this.room.box.y+this.room.box.height),
                     this.#whip.thickness,
-                    constrain(0, this.#whip.length, (this.room.box.y + this.room.box.height + this.room.wallHeight/2) - (this.box.y + this.box.height))
+                    VC.Math.constrain(0, this.#whip.length, (this.room.box.y + this.room.box.height + this.room.wallHeight/2) - (this.box.y + this.box.height))
                 );
                 break;
             case Direction.WEST:
                 this.#whip.box.reset(
-                    constrain(this.room.box.x - this.room.wallHeight/2,this.box.x - this.#whip.length, this.box.x),
+                    VC.Math.constrain(this.room.box.x - this.room.wallHeight/2,this.box.x - this.#whip.length, this.box.x),
                     Math.round(this.box.y - 29 + this.box.height/2 - this.#whip.thickness/2),
-                    constrain(0, this.#whip.length, this.box.x - this.room.box.x + this.room.wallHeight/2),
+                    VC.Math.constrain(0, this.#whip.length, this.box.x - this.room.box.x + this.room.wallHeight/2),
                     this.#whip.thickness
                 );
                 break;
@@ -308,7 +308,7 @@ class Adventurer extends Character{
         return super.health;
     }
     set health(value){
-        value = constrain(0, value, super.maxHealth);
+        value = VC.Math.constrain(0, value, super.maxHealth);
         super.health = value;
         if(this.health>10){
             this.stopSound(2, SoundEffects.HEART);

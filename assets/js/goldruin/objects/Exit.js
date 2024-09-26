@@ -64,8 +64,8 @@ class Exit extends GameObject {
 
         //can only check player position when we're rendering.
         if(game.player.box.inside(this.box)){
-            game.player.sprite.scale= constrain(.85,Math.round(((game.player.box.y - this.box.y) * 100 / this.box.height))/100 +.25,1);
-            game.player.speed = constrain(100,((game.player.box.y - this.box.y) / this.box.height)*150,150);
+            game.player.sprite.scale= VC.Math.constrain(.85,Math.round(((game.player.box.y - this.box.y) * 100 / this.box.height))/100 +.25,1);
+            game.player.speed = VC.Math.constrain(100,((game.player.box.y - this.box.y) / this.box.height)*150,150);
         }
         if(game.player.box.inside(this.tripBox) && !this.#hasBeenTripped){
             this.#hasBeenTripped = true;
