@@ -1,5 +1,5 @@
 //REQUIRES Direction, Team, State, Layer, Plane, GameObject, Character, InvisibleObject, Starburst, TNT, Explosion, Torch, TorchLightEffect, Exit, SpikeTrap, ScorchMark, Treasure, TreasureChest, CaveSpider, Snake, Player, Format, AutoController
-const VERSION = "v3.24.09.26.01 BETA"
+const VERSION = "v3.24.09.26.02 BETA"
 const DEBUG = false
 
 const SCREENBLACK = "#080808";
