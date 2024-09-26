@@ -41,15 +41,16 @@ class SwordSkeleton extends Character{
 
         var state1 = this.state;
         super.move(deltaT); 
-        if(this.state != state1 && game.level && this.room == game.level.currentRoom ){
+        if(this.state != state1){
             switch(this.state){
                 case State.WALKING: 
-                    sfx.skeletonwalk(this, true);
+                    this.playSound(0, SoundEffects.SWORDSKELETON_WALK, .2, true, false);
                     break;
                 default:
-                    sfx.skeletonwalk(this,false)
+                    this.stopSound(0, SoundEffects.SWORDSKELETON_WALK);
             }
         }
+        
     }
 
     render(deltaT, screen){
@@ -69,17 +70,14 @@ class SwordSkeleton extends Character{
         //}
     }
     remove(){
+        if (this.room == game.level.currentRoom){
+            console.log("removing skeleton...", Date.now())
+        
+        }
+        super.remove();
         if(this.sprite){
             this.sprite.remove();
         }
-        if(this.attackPlayer){
-            this.attackPlayer.stop();
-            this.attackPlayer.dispose();
-        }
-        if(this.walkPlayer){
-            this.walkPlayer.stop();
-            this.walkPlayer.dispose();
-        } 
         if(DEBUG){
             this.box.remove();
         }
@@ -87,7 +85,7 @@ class SwordSkeleton extends Character{
 
     attack(){
         if(this.state != State.ATTACKING){
-            sfx.skeletonattack(this);
+            this.playSound(1, SoundEffects.SWORDSKELETON_ATTACK, 1, false, false);
             this.state = State.ATTACKING;
             this.attacked==false;
         }
@@ -154,7 +152,7 @@ class SwordSkeleton extends Character{
         if(startHealth>0 && this.health<=0){
             game.level.statistics.swordSkeletonsKilled++;
             game.level.statistics.enemiesKilled++;
-            sfx.skeletonDeath();
+            this.playSound(2, SoundEffects.SKELETON_DEATH, 1, false, false);
         }
     }
 }

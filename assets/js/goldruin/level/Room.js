@@ -19,6 +19,8 @@ class Room extends VC.Scene {
     tileSeed = 0;
     structureRendered = false;
     #doorsRendered = false;
+    #audioChannel = new VC.AudioChannel();
+
     constructor(x, y, w, h, wallHeightInBricks){
         super();
         this.x = x; //map address
@@ -40,6 +42,35 @@ class Room extends VC.Scene {
 
     }
 
+    #volume = 0;
+    get volume(){
+        return this.#volume;
+    }
+
+    set volume(value){
+        value = value < 0 ? 0 : (value > 1 ? 1 : value);
+        if(this.#volume != value){
+            this.#volume = value;
+            this.#checkAudioLevels();
+        }
+    }
+    #pan = 0;
+    get pan(){
+        return this.#pan;
+    }
+
+    set pan(value){
+        value = value < -1 ? -1 : (value > 1 ? 1 : value);
+        if(this.#pan != value){
+            this.#pan = value;
+            this.#checkAudioLevels()
+        }
+    }
+    
+    #checkAudioLevels(){
+        this.objects.forEach((o)=>o.checkAudioLevels());
+    }
+
 
     preRender(deltaT){
         this.objects.forEach((o)=>{
@@ -58,11 +89,11 @@ class Room extends VC.Scene {
             }
         });
 
-        if(this.barred!=barred){
+        if(this.barred!=barred && game && game.level && this == game.level.currentRoom ){
             if(barred){
-                sfx.roomBarred()
+                this.#audioChannel.play(SoundEffects.ROOM_BARRED, game.data.sfxVolume, false);
             }else{
-                sfx.roomOpened()    
+                this.#audioChannel.play(SoundEffects.ROOM_OPENED, game.data.sfxVolume, false);
             }
             this.barred = barred;
             this.#doorsRendered = false
@@ -70,6 +101,7 @@ class Room extends VC.Scene {
     
 
     }
+
     render(deltaT, screen){
 
         if(!this.structureRendered){
@@ -90,13 +122,27 @@ class Room extends VC.Scene {
 
     postRender(deltaT){
         this.#deadObjects.forEach((o)=>{
-            if(o!=game.player){//HACK, find a better way to reference this?
+            if(o!=game.player){
+                o.remove();
                 o.room = null;
             }
-            o.remove();
         });
         
         this.#deadObjects = [];   
+    }
+
+    postDisplay(){
+        var removable = [];
+        this.objects.forEach((o)=>{
+            if(o!=game.player){
+                o.remove();
+                removable.push(o);
+                //o.room = null;
+            }
+        });
+        removable.forEach((o)=>{ o.room = null;})
+        removable = [];
+        this.#audioChannel.dispose();
     }
 
 
@@ -404,7 +450,7 @@ class Room extends VC.Scene {
                     door.opened = 1;
                     game.level.findNeighbor(this, door.wall).opened=1;
                     game.level.statistics.doorsUnlocked++;
-                    sfx.roomOpened();
+                    this.#audioChannel.play(SoundEffects.ROOM_OPENED, game.data.sfxVolume, false)
                     this.#doorsRendered = false;
                     
                 } else if((!door.opened || door.forceBars) && game.player.box.inside(door.box)) {

@@ -1,7 +1,8 @@
 //REQUIRES GameObject, ControllerBase, State
 
 class Character extends GameObject{
-    health = 0;
+    
+    #health = 0;
     maxHealth = 0;
     damage = 0;
     _attackDuration = 500;
@@ -15,6 +16,14 @@ class Character extends GameObject{
         super(room);
         this.controller = controller;
     }
+
+    get health(){
+        return this.#health;
+    }
+    set health(value){
+        this.#health = value;
+    }
+
 
     get canAttack(){
         if(!this._lastAttack || Date.now() - this._lastAttack > this._attackCooldown){
@@ -87,12 +96,17 @@ class Character extends GameObject{
                 if (this.state!=State.IDLE){
                     this.state = State.IDLE;
                 }
-            }   
+            }
+            super.move();
         }
     }
 
     attack(){
         console.warn("unimplemented: attack()");
+    }
+
+    remove(){
+        super.remove();
     }
 
     hurt(damage, knockback){

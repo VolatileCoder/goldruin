@@ -65,10 +65,11 @@ class Snake extends Character {
         if(DEBUG){
             this.box.remove();
         }
+        super.remove();
     }
     attack(){
         if(this.state != State.ATTACKING){
-            sfx.snakeBite(this);
+            this.playSound(0, SoundEffects.SNAKE_BITE, 1, false, false);
             this.state = State.ATTACKING;
         }
         var opposingTeam = Team.getOpposingTeam(this.team)
@@ -145,7 +146,7 @@ class Snake extends Character {
                 game.level.statistics.snakesKilled++;
                 game.level.statistics.enemiesKilled++;
             }
-            sfx.snakeDeath();
+            this.playSound(0, SoundEffects.SNAKE_DEATH, 1, false, false);
         }
     }
 }

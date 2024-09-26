@@ -1,9 +1,10 @@
-//REQUIRES Room, Statistics, Level, LevelFactory
+//REQUIRES Room, Statistics, Level, LevelFactory, Music
 
 class EndLevelSummary extends Room {
     statistics = null;
     constructor(nextLevel, statistics){
         super(0, 0, 3 * constants.brickWidth, constants.roomMaxHeightInBricks * constants.brickWidth, 5, constants.roomMaxHeightInBricks * constants.brickWidth);
+        this.volume = 1;
         this.statistics = statistics;
         this.box.x = this.wallHeight;
         this.box.y = Math.round((dimensions.width - this.box.height - this.wallHeight*2) / 2) + this.wallHeight;
@@ -46,7 +47,7 @@ class EndLevelSummary extends Room {
 
     }
     preDisplay(){
-        music.exitLevel();
+        game.playMusic(Music.EXIT_LEVEL);
     
     }
     statsRendered = false

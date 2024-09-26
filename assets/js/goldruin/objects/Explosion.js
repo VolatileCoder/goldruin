@@ -43,7 +43,8 @@ class Explosion extends GameObject{
                     }
                 }
             })
-            sfx.explosion();
+            super.move();
+            this.playSound(0, SoundEffects.EXPLOSION, 1, false)
         }
         if(this.state != State.DEAD && Date.now()-this._stateStart>400){
             this.state = State.DEAD;

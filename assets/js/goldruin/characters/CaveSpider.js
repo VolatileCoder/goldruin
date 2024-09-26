@@ -29,15 +29,17 @@ class CaveSpider extends Character {
         }
         var state1 = this.state;
         super.move(deltaT);
-        if(this.state!=state1 && game.level && this.room == game.level.currentRoom){
+        
+        if (this.state != state1){           
             switch(this.state){
                 case State.WALKING: 
-                    sfx.spiderwalk(this, true);
+                    this.playSound(0, SoundEffects.SPIDER_WALK, .4, true, false);
                     break;
                 default:
-                    sfx.spiderwalk(this, false)
+                    this.stopSound(0, SoundEffects.SPIDER_WALK);
             }
         }
+    
         switch(this.direction){
             case Direction.NORTH:
                 this.box.width = 75;
@@ -79,22 +81,15 @@ class CaveSpider extends Character {
         if(this.sprite){
             this.sprite.remove();
         }
-        if(this.bitePlayer){
-            this.bitePlayer.stop();
-            this.bitePlayer.dispose();
-        }
-        if(this.walkPlayer){
-            this.walkPlayer.stop();
-            this.walkPlayer.dispose();
-        } 
         if(DEBUG){
             this.box.remove();
         }
+        super.remove();
     }
 
     attack(){
         if(this.state != State.ATTACKING){
-            sfx.spiderbite(this);
+            this.playSound(1, SoundEffects.SPIDER_BITE, .8, false, false);
             this.state = State.ATTACKING;
         }
         var opposingTeam = Team.getOpposingTeam(this.team)
@@ -193,7 +188,7 @@ class CaveSpider extends Character {
                 game.level.statistics.caveSpidersKilled++;
                 game.level.statistics.enemiesKilled++;
             }
-            sfx.spiderDeath();
+            this.playSound(2, SoundEffects.SPIDER_DEATH, 1, false, false);
         }
     }
 }

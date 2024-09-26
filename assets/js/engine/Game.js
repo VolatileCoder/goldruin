@@ -25,7 +25,9 @@ VC.Game = class{
         }
         window.setTimeout(()=>{this._loop(startTime);},0);
     }
-    
+    get state(){
+        return this.#state;
+    }
     play(){
         this.#state = VC.GameState.RUNNING;
         this.onPlay();

@@ -1,4 +1,4 @@
-//REQUIRES Character, Direction, Team, State
+//REQUIRES Character, Direction, Team, State, SoundEffects
 
 class Adventurer extends Character{
     
@@ -9,7 +9,6 @@ class Adventurer extends Character{
         length: 175, 
         box: new VC.Box(0,0,0,0)
     }
-
 
     constructor(room,controller){
         super(room,controller);
@@ -27,9 +26,8 @@ class Adventurer extends Character{
         this._attackDuration = 250;
         this._attackCooldown = 750;
     }
-
+    
     move(deltaT){
-        if(this.state==State.THROWING) console.log("State.THROWING")
         if(this.state != State.DYING && this.state != State.DEAD){
             if(this.attackBegin != null && this.controller.read().a == 0){
                 if(this.state == State.THROWING){
@@ -44,9 +42,9 @@ class Adventurer extends Character{
         super.move(deltaT);
         if(this.state!=state1){
             if(this.state==State.WALKING){
-                sfx.walk(true);
+                this.playSound(0, SoundEffects.FOOTSTEPS, .2, true, false);
             }else{
-                sfx.walk(false);
+                this.stopSound(0, SoundEffects.FOOTSTEPS);
             }
         }
     }
@@ -136,7 +134,22 @@ class Adventurer extends Character{
         var targets = this.getObjectsInRangeOfAttack(); 
         if(this.state != State.ATTACKING && this.canAttack){
             this.state = State.ATTACKING;
-            sfx.whip();
+            
+            var url = "";
+            switch(Math.round((Math.random()*2) % 3)){
+                case 0:
+                    url=SoundEffects.WHIP1;
+                    break;
+                case 1:
+                    url=SoundEffects.WHIP2;
+                    break;
+                case 2:
+                    url=SoundEffects.WHIP3;
+                    break;
+            }
+            
+            this.playSound(1, url, .9, false, false);
+
             var targets = this.getObjectsInRangeOfAttack(); 
             if(targets.length>0){
                 var collidingWith = targets[0];
@@ -283,12 +296,22 @@ class Adventurer extends Character{
     hurt(damage, knockback){
         super.hurt(damage, knockback);
         if(this.health<15){
-            sfx.lowHealth(true);
+            this.playSound(2, SoundEffects.HEART, 1, true, false);
         }
         if(this.state == State.DYING){
             this.direction = Direction.SOUTH;
-            sfx.lowHealth(false);
-            sfx.playerdeath();
+            this.playSound(2, SoundEffects.ADVENTURER_DEATH, 1, false, false);
+        }
+    }
+
+    get health(){
+        return super.health;
+    }
+    set health(value){
+        value = constrain(0, value, super.maxHealth);
+        super.health = value;
+        if(this.health>10){
+            this.stopSound(2, SoundEffects.HEART);
         }
     }
 

@@ -47,7 +47,8 @@ class TreasureChest extends GameObject{
            (game.player.box.inside(this.#tripBack) && game.player.direction==Direction.SOUTH)
         )){
             this.#opened = true;
-            sfx.openChest();
+            super.move();
+            this.playSound(0,SoundEffects.CHEST, .7, false)
             game.level.statistics.chestsOpened++;
             if(this.#content == Treasure.RANDOM){
                 if ((game.player.health/game.player.maxHealth) < Math.random()){
@@ -60,24 +61,26 @@ class TreasureChest extends GameObject{
             if(this.#content >= Treasure.SILVERKEY && this.#content <= Treasure.BLUEKEY){
                 game.player.keys.push(this.#content);
                 game.level.statistics.keysCollected++;
+                setTimeout(()=>{this.playSound(1,SoundEffects.KEY, .7, false);},400);
+                
             } else if (this.#content == Treasure.HEART){
-                game.player.health=constrain(0, game.player.health + 10, game.player.maxHealth);
-                if(game.player.health>=15){
-                    sfx.lowHealth(false)
-                }
+                game.player.health = constrain(0, game.player.health + 10, game.player.maxHealth);
                 game.level.statistics.heartsCollected++;
+                setTimeout(()=>{this.playSound(1,SoundEffects.HEART, .7, false);},400);
             } else if (this.#content == Treasure.TNT){
                 game.player.tntCount++;
                 game.level.statistics.tntCollected += 1;
+                setTimeout(()=>{this.playSound(1,SoundEffects.TNT, .7, false);},400);
             } else if (this.#content == Treasure.HEARTCONTAINER){
                 game.player.maxHealth += 10;
                 game.player.health = game.player.maxHealth;//TODO: add slowly
+                setTimeout(()=>{this.playSound(1,SoundEffects.HEART_CONTAINER, .7, false);},400);
             } else {
                 var goldValue = (this.#content - Treasure.TNT ) * 100;
                 game.player.gold += goldValue;
                 game.level.statistics.goldCollected += goldValue;
+                setTimeout(()=>{this.playSound(1,SoundEffects.GOLD, .7, false);},400);
             }
-            setTimeout(()=>{sfx.treasure(this.#content)},500);
         }
     }
 

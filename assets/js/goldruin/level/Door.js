@@ -8,6 +8,7 @@ class Door {
     offset = 0; 
     forceBars = false;
     elements = [];
+    isEntrance = false;
 
     constructor(level, room, wall, offset){
         this.level = level;

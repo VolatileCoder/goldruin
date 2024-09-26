@@ -11,9 +11,9 @@ class SpikeTrap extends GameObject{
     }
     attack(){
         this.state = State.ATTACKING;
-        if(game && game.level && this.room==game.level.currentRoom){
-            sfx.floorSpikes(this);
-        }
+        
+        this.playSound(0, SoundEffects.FLOOR_SPIKES, .25, false);
+
         this.box.width = 62;
         this.box.height = 58;
         this.room.objects.forEach((o)=>{
@@ -58,7 +58,6 @@ class SpikeTrap extends GameObject{
             this.#sprite.setFrame(0, State.WALKING, 0);
         } else if (this.state == State.ATTACKING) {
             var frame = constrain(0, Math.floor((Date.now()-this._stateStart)/100), 8);
-            console.log(frame);
             this.#sprite.setFrame(0, State.ATTACKING, frame);
         }
 
@@ -70,8 +69,6 @@ class SpikeTrap extends GameObject{
             this.#sprite.remove();
             this.#sprite = null;
         }
-        if(this.spikesPlayer){
-            this.spikesPlayer.dispose();
-        }
+        super.remove()
     }
 }

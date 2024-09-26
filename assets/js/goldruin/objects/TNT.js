@@ -29,17 +29,17 @@ class TNT extends GameObject{
             }
         
             window.setTimeout(()=>{
-                if(this.fusePlayer){
-                    this.fusePlayer.stop();
-                    this.fusePlayer.dispose();
-                }
+                this.stopSound(0, SoundEffects.FUSE)
             },200);
+
             this.state = State.DEAD;
         },2000)
-        sfx.fuse(this);
+
+        this.playSound(0, SoundEffects.FUSE, .6, true)
     }
 
     move(deltaT){
+        console.log("TNT", this.relativePan);
         if(this.state == State.IDLE || this.state == State.DEAD){
              return;
         }
@@ -91,6 +91,7 @@ class TNT extends GameObject{
         }   
 */
 
+        super.move();
     }    
 
     render(deltaT, screen){

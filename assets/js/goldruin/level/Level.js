@@ -1,10 +1,10 @@
-//REQUIRES Direction
+//REQUIRES Direction, Music
 
 class Level extends VC.Scene {
     number = -1;
     rooms = [];
-    currentRoom = null;
-    #lastRoom = null;
+    #currentRoom = null;
+    
     statistics =  null;
     constructor(){
         super();
@@ -15,23 +15,61 @@ class Level extends VC.Scene {
         return Math.floor(this.number / 5) + 1;
     }
 
+    get currentRoom(){
+        return this.#currentRoom;
+    }
+    
+    set currentRoom(nextRoom){
+        if(this.#currentRoom != nextRoom){
+            if(this.#currentRoom != null && this.#currentRoom instanceof Room){
+                this.#currentRoom.doors.forEach((d)=>{
+                    var n = this.findNeighbor(this.#currentRoom, d.wall);
+                    if(n && n instanceof Room){
+                        n.volume = 0;
+                    }
+                })
+            }
+            this.#currentRoom = nextRoom;
+            if(this.#currentRoom != null && this.#currentRoom instanceof Room){
+                this.#currentRoom.doors.forEach((d)=>{
+                    var n = this.findNeighbor(this.#currentRoom, d.wall);
+                    if(n && n instanceof Room){
+                        n.volume = .25;
+                        switch(d.wall){
+                            case Direction.EAST: 
+                                n.pan = 1;
+                                break;
+                            case Direction.WEST: 
+                                n.pan = -1;
+                                break;
+                            default:
+                                n.pan = 0;
+                                break;
+                        }
+                    }
+                })
+                this.#currentRoom.volume = 1;
+            }
+        }
+    }
     
     preDisplay(){
         if(this.currentRoom == null && this.rooms.length>0){
             this.currentRoom = this.rooms[0];
 
             if(this.number % 5 == 4){
-                sfx.chimes();
-                music.mystery();
+                game.playMusic(Music.MYSTERY);
             } else {
-                music.explore();
+                game.playMusic(Music.EXPLORATION);
             }
             
             var startingRoom = this.rooms[0];
             startingRoom.visited = 1;
             this.currentRoom = startingRoom;
+            this.currentRoom.volume = 1;
 
             var entrance = filter(startingRoom.doors, (d)=>{return d.isEntrance})[0];
+            
             var direction = Direction.NORTH;
             switch (entrance.wall){
                 case Direction.NORTH:
@@ -40,7 +78,7 @@ class Level extends VC.Scene {
                     direction = Direction.SOUTH;
                     break;
                 case Direction.EAST:
-                    game.player.box.x = entrance.box.center().x;
+                    game.player.box.x = entrance.box.center().x - entrance.box.width/2;
                     game.player.box.y = entrance.box.center().y - game.player.box.height/2;
                     direction = Direction.WEST;
                     break;
@@ -50,7 +88,7 @@ class Level extends VC.Scene {
                     direction = Direction.NORTH;
                     break;
                 case Direction.WEST:
-                    game.player.box.x = entrance.box.center().x;
+                    game.player.box.x = entrance.box.center().x + entrance.box.width/2;
                     game.player.box.y = entrance.box.center().y - game.player.box.height/2;
                     direction = Direction.EAST;
                     break;
@@ -73,19 +111,36 @@ class Level extends VC.Scene {
         //console.log("test", deltaT);
         if (this.currentRoom){
             this.currentRoom.preRender(deltaT);
+            //player center
+            var pc = game.player.box.center();
             this.currentRoom.doors.forEach((d)=>{
                 var n = this.findNeighbor(this.currentRoom, d.wall);
-                if(n){
+                if(n && n instanceof Room){
+                    if(d.isEntrance){
+                        n.volume = 0;
+                        return
+                    }
+                    //door center
+                    var dc = this.doorCoordinates(this.currentRoom, d);
+                    //distance between player and door
+                    var d = VC.Trig.distance(pc.x, pc.y, dc.x, dc.y)
+                    
+                    var maxDistance = 300;
+                    d = constrain(0, d, maxDistance);
+                    
+                    n.volume =  .66 - ((d / maxDistance) * .45);
+
                     n.preRender(deltaT);
                 }
             })
         }
     }
 
+    #lastRenderedRoom = null
     render(deltaT, screen){
-        if(this.#lastRoom != this.currentRoom){
+        if(this.#lastRenderedRoom != this.currentRoom){
             screen.clear();
-            this.#lastRoom = this.currentRoom;
+            this.#lastRenderedRoom = this.currentRoom;
         }
         if (this.currentRoom){
             this.currentRoom.render(deltaT, screen); 
@@ -107,6 +162,39 @@ class Level extends VC.Scene {
             }
         }
         return null;
+    }
+    postDisplay(){
+        console.log("Level.postDisplay()");
+        this.rooms.forEach((room)=>{
+            room.postDisplay();
+        });
+    }
+
+    doorCoordinates(room, door){
+        switch (door.wall){
+            case Direction.NORTH:
+                return {
+                    x: room.box.center().x + door.offset,
+                    y: room.box.y
+                }
+            case Direction.EAST:
+                return {
+                    x:room.box.x + room.box.width, 
+                    y:room.box.center().y + door.offset
+                };
+            case Direction.SOUTH:
+                return {
+                    x: room.box.center().x - door.offset,
+                    y: room.box.y + room.box.height
+                }
+            case Direction.WEST:
+                return {
+                    x:room.box.x , 
+                    y:room.box.center().y - door.offset
+                };
+        }
+
+        return {x:0, y:0};
     }
 
     findNeighbor(room, direction){
@@ -168,7 +256,7 @@ class Level extends VC.Scene {
             nextRoom.visited = 1;
             game.player.room = nextRoom;
             this.currentRoom = nextRoom;
-            var loc = getEntranceLocation(nextRoom,(direction + 2) % 4)
+             var loc = this.getEntranceLocation(nextRoom,(direction + 2) % 4)
             if (game.player && game.player.box){
                 game.player.box.x = loc.x;
                 game.player.box.y = loc.y;
@@ -186,13 +274,46 @@ class Level extends VC.Scene {
             gameObject.remove();
             gameObject.room = nextRoom;
             
-            var loc = getEntranceLocation(nextRoom,(direction + 2) % 4)
+            var loc = this.getEntranceLocation(nextRoom,(direction + 2) % 4)
             if (gameObject.box){
                 gameObject.box.x = loc.x;
                 gameObject.box.y = loc.y;
             }
         } 
     }
+
     
+    getEntranceLocation(room, wall){
+        wall = wall % 4
+        var door = room.findDoor(wall);
+        var loc = {x:0, y:0};
+        switch (wall){
+            case Direction.NORTH:
+                return {
+                    x : game.player.box.x,//room.box.x + room.wallHeight + door.offset + room.box.width/2,
+                    y : room.box.y - constants.doorHeight + constants.doorFrameThickness + game.player.box.height
+                };
+            case Direction.EAST: 
+                return {
+                    x : room.box.x + room.box.width - game.player.box.width, 
+                    y : game.player.box.y//room.box.y + room.wallHeight - constants.doorHeight/2
+                };
+            
+            case Direction.SOUTH:
+                return {
+                    x : game.player.box.x,//room.box.x + room.wallHeight + door.offset + room.box.width/2,
+                    y : room.box.y + room.box.height - game.player.box.height/2
+                };
+            case Direction.WEST: 
+                return {
+                    x : room.box.x + game.player.box.width/2,
+                    y : game.player.box.y//room.box.y + room.wallHeight - constants.doorHeight/2
+                };
+            
+            default:
+                console.warn("unexpected wall: " + wall)
+                return {x:0, y:0};
+        }
+    }
 
 }

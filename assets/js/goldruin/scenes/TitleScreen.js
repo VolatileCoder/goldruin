@@ -1,4 +1,4 @@
-//REQUIRES Torch, Direction
+//REQUIRES Torch, Direction, Music, SoundEffects
 
 class TitleScreen extends VC.Scene {
     #prompt = null;
@@ -12,6 +12,7 @@ class TitleScreen extends VC.Scene {
     #k = 0;
     #exiting = false;
     #rendered = false;
+    audioChannel = new VC.AudioChannel();
     
     constructor(){
         super();
@@ -63,13 +64,21 @@ class TitleScreen extends VC.Scene {
             }
             if(c.a==1 && !this.#exiting){
                 this.#exiting = true;
-                //generate level
-                music.init();
                 this.#prompt.animate({opacity:0},100, "elastic",()=>{
                     if (this.#k==1){
-                        sfx.evilLaugh();
+                        this.audioChannel.play(SoundEffects.EVIL_LAUGH, game.data.sfxVolume, false);
+
                     }else{
-                        music.start();
+                        /*
+                        var player = new Tone.Player(Music.START).toDestination();
+                        
+                        var panner = new Tone.Panner3D(-1,0,0).toDestination();
+                        
+                        player.connect(panner);
+                        player.autostart = true;
+                        player.loop = true;
+                        */
+                        game.playMusic(Music.START);
                     }
                     this.#prompt.animate({opacity:1},100, "elastic",()=>{            
                         this.#prompt.animate({opacity:0},100, "elastic",()=>{
@@ -88,7 +97,7 @@ class TitleScreen extends VC.Scene {
     }
     render(deltaT, screen){
         if(this.#rendered == false){
-            
+            screen.drawRect(0,0,dimensions.width, dimensions.width, SCREENBLACK, SCREENBLACK, 0);
             screen.image(images.logo, 150, 150, 600, 320);
             this.#prompt = screen.text(dimensions.width/2, dimensions.width-250, "PRESS " + (VC.Client.orientation == VC.Orientation.PORTRAIT ? "FIRE" : "SPACE BAR") + " TO BEGIN").attr({ "font-size": "48px", "font-family": "monospace", "fill": "#FFF", "text-anchor": "middle", "font-weight": "bold"});  
             screen.text(dimensions.width/2, dimensions.width-133, VERSION).attr({ "font-size": "28px", "font-family": "monospace", "fill": "#888", "text-anchor": "middle", "font-weight": "bold"});  
@@ -103,5 +112,7 @@ class TitleScreen extends VC.Scene {
         }
         this.#prompt.attr({"text": "PRESS " + (VC.Client.orientation == VC.Orientation.PORTRAIT ? "FIRE" : "SPACE BAR") + " TO BEGIN"});
     }
-
+    postDisplay(){
+        //this.audioChannel.dispose();
+    }
 }

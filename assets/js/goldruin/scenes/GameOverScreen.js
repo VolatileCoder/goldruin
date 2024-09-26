@@ -1,3 +1,4 @@
+//REQUIRES Music
 class GameOverScreen extends VC.Scene{
     #statistics = null
     #rendered = false;
@@ -6,7 +7,7 @@ class GameOverScreen extends VC.Scene{
         this.#statistics = statistics; 
     }
     preDisplay(){
-        music.death();
+        game.playMusic(Music.DEATH);
         game.player.state = State.DEAD;
     }
     preRender(deltaT){}

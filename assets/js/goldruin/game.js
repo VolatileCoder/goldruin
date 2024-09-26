@@ -7,10 +7,12 @@ class Game extends VC.Game {
     player = null;
     statistics =  new Statistics(screen);
     currentScene = null;
+    musicChannel = new VC.AudioChannel();
+    data = GameData.load();
 
     constructor(){
         super();
-        
+        this.infoScreen.drawRect(0, 0, dimensions.width, dimensions.infoHeight, SCREENBLACK, SCREENBLACK, 0);
         this.player = new Adventurer(null, this.inputController);
         this.player.team = Team.HEROIC;
         this.player.tntCount = 5;
@@ -150,5 +152,9 @@ class Game extends VC.Game {
         if(this.level){
             this.infoElements.levelElement.attr("text","Level " + this.level.world + "-" + ((this.level.number % 5) + 1));
         }
+    }
+    
+    playMusic(uri){
+        this.musicChannel.fadeOut(()=>{this.musicChannel.play(uri, this.data.musicVolume, true, true)});
     }
 }
