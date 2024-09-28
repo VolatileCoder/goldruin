@@ -2,8 +2,11 @@
 
 VC.Screen = class {
     #screen = null;
+    #x = 0;
+    #y = 0;
     #width = 0;
     #height = 0;
+    #domElementId = "";
     constructor(domElementId, x, y, width, height){
         var screen = Raphael(domElementId, width, height);
         screen.setViewBox(x, y, width, height, true);
@@ -12,6 +15,25 @@ VC.Screen = class {
         this.#screen = screen;
         this.#width = width;
         this.#height = height;
+        this.#x = x;
+        this.#y = y;
+        this.#domElementId = domElementId;
+        console.log(this.#y);
+    }
+    get domElementId(){
+        return this.#domElementId;
+    }
+    get x(){
+        return this.#x;
+    }
+    get y(){
+        return this.#y;
+    }
+    get height(){
+        return this.#height;
+    }
+    get width(){
+        return this.#width;
     }
 
     drawLine(x1,y1,x2,y2,color,thickness){
@@ -175,8 +197,8 @@ VC.Screen = class {
     }
 
     setViewBox(x, y, w, h, fit){
-        this.#width = w;
-        this.#height = h;
+        //this.#width = w;
+        //this.#height = h;
         return this.#screen.setViewBox(x, y, w, h, fit);
     }
 

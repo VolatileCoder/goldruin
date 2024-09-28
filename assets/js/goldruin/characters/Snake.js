@@ -32,19 +32,23 @@ class Snake extends Character {
         
         switch(this.direction){
             case Direction.NORTH:
+                this.box.width = 50;
                 this.sprite.location.x = this.box.x-25;
                 this.sprite.location.y = this.box.y-25;
                 break;
             case Direction.WEST:
+                this.box.width = 75;
                 this.sprite.location.x = this.box.x-10;
                 this.sprite.location.y = this.box.y-30;
                 break;
             case Direction.SOUTH:
+                this.box.width = 50;
                 this.sprite.location.x = this.box.x-25;
                 this.sprite.location.y = this.box.y-10;
                 break;
             case Direction.EAST:
-                this.sprite.location.x = this.box.x-40;
+                this.box.width = 75;
+                this.sprite.location.x = this.box.x-15;
                 this.sprite.location.y = this.box.y-30;
                 break;
                         

@@ -18,7 +18,7 @@ class TreasureChest extends GameObject{
         this.team = Team.UNALIGNED;
         this.box.width=64;
         this.box.height=32;
-        this.#opened = 0;
+        this.#opened = false;
         this.#content = content;
     }
 
