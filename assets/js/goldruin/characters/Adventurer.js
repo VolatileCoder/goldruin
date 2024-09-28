@@ -1,4 +1,4 @@
-//REQUIRES Character, Direction, Team, State, SoundEffects
+//REQUIRES Character, Direction, Team, State, SoundEffects, Images
 
 class Adventurer extends Character{
     
@@ -52,7 +52,7 @@ class Adventurer extends Character{
     render(deltaT, screen){
         var framestart = Date.now()
         if(!this.sprite){
-            this.sprite = new VC.Sprite(screen, images.adventurer, 800, 600, 100, 100, 0, 0);
+            this.sprite = new VC.Sprite(screen, Images.ADVENTURER, 800, 600, 100, 100, 0, 0);
         }
         if(DEBUG){
             this.box.render(screen, "#FF0");

@@ -1,4 +1,4 @@
-//REQUIRES GameObject, Layer, Plane, State, ScorchMark, Direction
+//REQUIRES GameObject, Layer, Plane, State, ScorchMark, Direction, Images, SoundEffects
 
 class Explosion extends GameObject{
     
@@ -57,7 +57,7 @@ class Explosion extends GameObject{
             return;
         }
         if(!this.#sprite){
-            this.#sprite = new VC.Sprite(screen, images.explosion, 1000, 200, 200, 200, this.box.x, this.box.y);
+            this.#sprite = new VC.Sprite(screen, Images.EXPLOSION, 1000, 200, 200, 200, this.box.x, this.box.y);
             this.#sprite.setAnimation(0,0);
             this.#sprite.location.r = Math.round(Math.random() * 360);
             VC.VisualEffects.shake(screen,1, 200);

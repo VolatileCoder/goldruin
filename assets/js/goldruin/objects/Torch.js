@@ -1,4 +1,4 @@
-//REQUIRES GameObject, Plane, Layer, Direction, State
+//REQUIRES GameObject, Plane, Layer, Direction, State, Images
 class Torch extends GameObject{
     sprite = null;
     #particles=[];
@@ -32,7 +32,7 @@ class Torch extends GameObject{
     render(deltaT, screen){
         this.box.render(screen, "#FFF");
         if(this.sprite==null){
-            this.sprite = new VC.Sprite(screen, images.torch, 512,256, 64, 64,this.box.x-32, this.box.y-32);
+            this.sprite = new VC.Sprite(screen, Images.TORCH, 512,256, 64, 64,this.box.x-32, this.box.y-32);
             this.sprite.lastLocation.r = this.sprite.location.r = this.wall * 90;
             screen.onClear(()=>{
                  this.sprite = null;

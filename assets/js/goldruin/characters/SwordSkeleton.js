@@ -1,4 +1,4 @@
-//REQUIRES Character, Starburst, State, Team, Direction
+//REQUIRES Character, Starburst, State, Team, Direction, Images, SoundEffects
 
 class SwordSkeleton extends Character{
     constructor(room, controller){
@@ -55,7 +55,7 @@ class SwordSkeleton extends Character{
 
     render(deltaT, screen){
         if(!this.sprite){
-            this.sprite = new VC.Sprite(screen, images.swordSkeleton, 1200, 750, 150, 150, this.box.x-50, this.box.y-59);
+            this.sprite = new VC.Sprite(screen, Images.SWORD_SKELETON, 1200, 750, 150, 150, this.box.x-50, this.box.y-59);
             this.sprite.lastLocation.x = this.box.x-50;
             this.sprite.lastLocation.y = this.box.y-59;    
         }

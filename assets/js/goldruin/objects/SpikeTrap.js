@@ -1,4 +1,4 @@
-//REQUIRES GameObject, Layer, State, Direction, Starburst
+//REQUIRES GameObject, Layer, State, Direction, Starburst, Images, SoundEffects
 class SpikeTrap extends GameObject{
     #sprite = null;
     constructor(room, offsetT){
@@ -44,7 +44,7 @@ class SpikeTrap extends GameObject{
 
     render (deltaT, screen){
         if(!this.#sprite){
-            this.#sprite = new VC.Sprite(screen,images.floorSpikes,496, 150, 62, 50,this.box.x, this.box.y);
+            this.#sprite = new VC.Sprite(screen,Images.FLOOR_SPIKES,496, 150, 62, 50,this.box.x, this.box.y);
             screen.onClear(()=>{
                 this.#sprite = null;
             })

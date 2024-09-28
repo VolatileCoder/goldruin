@@ -1,4 +1,4 @@
-//REQUIRES Character, Team, Direction, State
+//REQUIRES Character, Team, Direction, State, Images, SoundEffects
 
 class CaveSpider extends Character {
     constructor(room, controller){
@@ -62,7 +62,7 @@ class CaveSpider extends Character {
 
     render(deltaT, screen){
         if(!this.sprite){
-            this.sprite = new VC.Sprite(screen, images.caveSpider, 800, 500, 100, 100, 0, 0);
+            this.sprite = new VC.Sprite(screen, Images.CAVE_SPIDER, 800, 500, 100, 100, 0, 0);
         }
         if(DEBUG){
            this.box.render(screen, "#FFF");

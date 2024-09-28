@@ -1,4 +1,4 @@
-//REQUIRES GameObject, Explosion, Layer, Plane, State
+//REQUIRES GameObject, Explosion, Layer, Plane, State, Images, SoundEffects
 
 class TNT extends GameObject{
     sprite = null;
@@ -100,7 +100,7 @@ class TNT extends GameObject{
         }
         
         if(!this.sprite){
-            this.sprite = new VC.Sprite(screen, images.dynamite, 384, 24, 24, 24, this.box.center().x-12, this.box.center().y-12);
+            this.sprite = new VC.Sprite(screen, Images.TNT, 384, 24, 24, 24, this.box.center().x-12, this.box.center().y-12);
             this.sprite.setAnimation(0,0);
         }
            

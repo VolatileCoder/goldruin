@@ -1,4 +1,4 @@
-//REQUIRES GameObject, Layer, Plane, State
+//REQUIRES GameObject, Layer, Plane, State, Images
 
 class Starburst extends GameObject{
     #sprite = null;
@@ -15,7 +15,7 @@ class Starburst extends GameObject{
             return;
         }
         if(!this.#sprite){
-            this.#sprite = new VC.Sprite(screen, images.starburst, 100, 25, 25, 25, this.box.center().x-12, this.box.center().y-12);
+            this.#sprite = new VC.Sprite(screen, Images.STARBURST, 100, 25, 25, 25, this.box.center().x-12, this.box.center().y-12);
             this.#sprite.setAnimation(0,0);
             this.#sprite.location.r = Math.round(Math.random() * 360);
         }

@@ -1,4 +1,4 @@
-//REQUIRES GameObject, Team, Treasure
+//REQUIRES GameObject, Team, Treasure, Images, SoundEffects
 
 class TreasureChest extends GameObject{
     #elements=[]
@@ -86,12 +86,12 @@ class TreasureChest extends GameObject{
 
     render(deltaT, screen){
         if(this.#elements.length == 0){
-            this.#backgroundSprite = new VC.Sprite(screen,images.chest,64,256,64,64,this.box.x,this.box.y-32);
+            this.#backgroundSprite = new VC.Sprite(screen,Images.CHEST,64,256,64,64,this.box.x,this.box.y-32);
             this.#elements.push(this.#backgroundSprite);
             //TODO: Move to "pickup" object (animation?)
-            this.#contentSprite = new VC.Sprite(screen, images.treasure, 36, 504, 36, 36, this.box.x+14,this.box.y-18)
+            this.#contentSprite = new VC.Sprite(screen, Images.TREASURE, 36, 504, 36, 36, this.box.x+14,this.box.y-18)
             this.#elements.push(this.#contentSprite);
-            this.#foregroundSprite = new VC.Sprite(screen,images.chest,64,256,64,64,this.box.x,this.box.y-32);
+            this.#foregroundSprite = new VC.Sprite(screen,Images.CHEST,64,256,64,64,this.box.x,this.box.y-32);
             this.#elements.push(this.#foregroundSprite);
             screen.onClear(()=>{this.#elements=[]});
         }

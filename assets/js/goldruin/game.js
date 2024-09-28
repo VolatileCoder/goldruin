@@ -1,4 +1,4 @@
-//REQUIRES main, Statistics, Direction, State, Team, Adventurer, InputController
+//REQUIRES main, Statistics, Direction, State, Team, Adventurer, InputController, Images
 //REQUIRES TitleScreen
 class Game extends VC.Game {
     infoScreen = new VC.Screen("info", 0, 0, dimensions.width, dimensions.height);
@@ -93,18 +93,18 @@ class Game extends VC.Game {
             this.infoElements.hearts = [];
             this.infoElements.keys = [];
             for(var i=0; i<constants.maxHeartContainers; i++){ 
-                var heart = new VC.Sprite(this.infoScreen,images.heartContainer,32,128,32,32, i * 36 + 8, 8)
+                var heart = new VC.Sprite(this.infoScreen,Images.HEART_CONTAINER,32,128,32,32, i * 36 + 8, 8)
                 this.infoElements.hearts.push(heart);
             }
             for(var i=0; i<5; i++){
-                this.infoElements.keys.push(new VC.Sprite(this.infoScreen, images.keyIcons, 32, 192, 32, 32, i * 36 + 8, 48))
+                this.infoElements.keys.push(new VC.Sprite(this.infoScreen, Images.KEY_ICONS, 32, 192, 32, 32, i * 36 + 8, 48))
             }
             //this.screen.circle(dimensions.width-20,64,10).attr({"fill":"#ffd700", "stroke":"#FFF", "stroke-width": 3});
            
-            this.infoElements.coinSprite = new VC.Sprite(this.infoScreen, images.treasure, 36, 504, 36, 36, dimensions.width-36, 48);
+            this.infoElements.coinSprite = new VC.Sprite(this.infoScreen, Images.TREASURE, 36, 504, 36, 36, dimensions.width-36, 48);
             this.infoElements.coinSprite.setFrame(0,Treasure.COIN,0);
     
-            this.infoElements.tntSprite = new VC.Sprite(this.infoScreen, images.treasure, 36, 504, 36, 36, dimensions.width-36, 10);
+            this.infoElements.tntSprite = new VC.Sprite(this.infoScreen, Images.TREASURE, 36, 504, 36, 36, dimensions.width-36, 10);
             this.infoElements.tntSprite.scale=.8
             this.infoElements.tntSprite.setFrame(0,Treasure.TNT,0);
     

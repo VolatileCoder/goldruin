@@ -1,4 +1,4 @@
-//REQUIRES GameObject Layer, Plane
+//REQUIRES GameObject Layer, Plane, Images
 
 class ScorchMark extends GameObject{
     #sprite = null;
@@ -20,7 +20,7 @@ class ScorchMark extends GameObject{
 
     render(deltaT, screen){   
         if(!this.#sprite){
-            this.#sprite = new VC.Sprite(screen, images.scorch, 75, 225, 75, 75, this.box.x, this.box.y);
+            this.#sprite = new VC.Sprite(screen, Images.SCORCH_MARK, 75, 225, 75, 75, this.box.x, this.box.y);
             this.#sprite.setAnimation(0,this.style);
             this.#sprite.location.r = this.rotation;
         }
