@@ -132,8 +132,7 @@ class InputController extends Controller {
 
                 x = ((x - d.x)-d.width/2)/(d.width/2);
                 y = ((y - d.y)-d.height/2)/(d.height/2)
-            
-                d = Math.abs(VC.Trig.radiansToDegrees(VC.Trig.pointToAngle(y,x)));
+                d = Math.abs(VC.Trig.radiansToDegrees(Math.atan(y/x)));
                 this.up = y < 0 && d > 23 ? 1 : 0;
                 this.right = x > 0 && d < 68 ? 1 : 0;
                 this.down = y > 0 && d > 22 ? 1 : 0;

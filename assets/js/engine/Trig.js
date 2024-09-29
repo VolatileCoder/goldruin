@@ -15,7 +15,7 @@ VC.Trig = class {
     }
     static pointToAngle(opposite, adjacent){
         if(adjacent<0){
-            return Math.PI +  Math.atan(opposite/adjacent);        
+            return Math.PI + Math.atan(opposite/adjacent);        
         }
         return Math.atan(opposite/adjacent);
     }
