@@ -50,15 +50,19 @@ class PolygonalRoom extends VC.Scene {
 
         if(this.box.width == 0){
             this.box.width = Math.round((((constants.roomMaxWidthInBricks - constants.roomMinWidthInBricks) * Math.random()) + constants.roomMinWidthInBricks)) * constants.brickWidth;
+       
+            //this.box.width = 500;
         }
         
         if(this.box.height == 0){
+            //this.box.height = 500;
             this.box.height = Math.round((((constants.roomMaxHeightInBricks - constants.roomMinHeightInBricks) * Math.random()) + constants.roomMinHeightInBricks)) * constants.brickWidth;
         }
 
         //center by default
         this.box.x = Math.round((dimensions.width - this.box.width - this.wallHeight*2) / 2) + this.wallHeight;
         this.box.y = Math.round((dimensions.width - this.box.height - this.wallHeight*2) / 2) + this.wallHeight; 
+
 
     }
 
@@ -181,56 +185,170 @@ class PolygonalRoom extends VC.Scene {
         this.doors.forEach((door)=>{
             switch(door.wall){
                 case Direction.NORTH:
-                    triangle_north = new VC.Triangle(
-                        centerPoint,
-                        new VC.Point(
-                            this.box.x + (this.box.width/2 + door.offset) + doorpadding,
-                            (this.box.y)
-                        ),
-                        new VC.Point(
-                            this.box.x + (this.box.width/2 + door.offset) - doorpadding,
-                            (this.box.y)
-                        )
-                    );
+                    if (Math.abs(door.offset) > doorpadding/2){
+                        if (door.offset>0){
+                            triangle_north = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2 + door.offset) + doorpadding,
+                                    (this.box.y)
+                                ),
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2) - doorpadding / 2,
+                                    (this.box.y)
+                                )
+                            );
+                        }else{
+                            triangle_north = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2) + doorpadding / 2,
+                                    (this.box.y)
+                                ),
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2 + door.offset) - doorpadding,
+                                    (this.box.y)
+                                )
+                            );
+                        }
+                    } else {
+                        triangle_north = new VC.Triangle(
+                            centerPoint,
+                            new VC.Point(
+                                this.box.x + (this.box.width/2 + door.offset) + doorpadding,
+                                (this.box.y)
+                            ),
+                            new VC.Point(
+                                this.box.x + (this.box.width/2 + door.offset) - doorpadding,
+                                (this.box.y)
+                            )
+                        );
+                    }
                     break;
                 case Direction.EAST:
-                    triangle_east = new VC.Triangle(
-                        centerPoint,
-                        new VC.Point(
-                            this.box.x + this.box.width,
-                            this.box.y + (this.box.height/2 + door.offset) + doorpadding
-                        ),
-                        new VC.Point(
-                            this.box.x + this.box.width,
-                            this.box.y + (this.box.height/2 + door.offset) - doorpadding
-                        )
-                    );
+                    if (Math.abs(door.offset) > doorpadding/2){
+                        if (door.offset>0){
+                            triangle_east = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x + this.box.width,
+                                    this.box.y + (this.box.height/2 + door.offset) + doorpadding
+                                ),
+                                new VC.Point(
+                                    this.box.x + this.box.width,
+                                    this.box.y + (this.box.height/2) - doorpadding /2
+                                )
+                            );
+                        }else{
+                            triangle_east = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x + this.box.width,
+                                    this.box.y + (this.box.height/2) + doorpadding/2
+                                ),
+                                new VC.Point(
+                                    this.box.x + this.box.width,
+                                    this.box.y + (this.box.height/2 + door.offset) - doorpadding
+                                )
+                            );
+                        }
+                    } else {
+                        triangle_east = new VC.Triangle(
+                            centerPoint,
+                            new VC.Point(
+                                this.box.x + this.box.width,
+                                this.box.y + (this.box.height/2 + door.offset) + doorpadding
+                            ),
+                            new VC.Point(
+                                this.box.x + this.box.width,
+                                this.box.y + (this.box.height/2 + door.offset) - doorpadding
+                            )
+                        );
+                    }
+
                     break;
                 case Direction.SOUTH:
-                    triangle_south = new VC.Triangle(
-                        centerPoint,
-                        new VC.Point(
-                            this.box.x + (this.box.width/2 - door.offset) - doorpadding,
-                            (this.box.y + this.box.height)
-                        ),
-                        new VC.Point(
-                            this.box.x + (this.box.width/2 - door.offset) + doorpadding,
-                            (this.box.y + this.box.height)
-                        )
-                    );
+                    if (Math.abs(door.offset) > doorpadding/2){
+                        if (door.offset>0){
+                            triangle_south = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2 - door.offset) - doorpadding,
+                                    (this.box.y + this.box.height)
+                                ),
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2 ) + doorpadding / 2,
+                                    (this.box.y + this.box.height)
+                                )
+                            );
+                        }else{
+                            triangle_south = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2 ) - doorpadding / 2,
+                                    (this.box.y + this.box.height)
+                                ),
+                                new VC.Point(
+                                    this.box.x + (this.box.width/2 - door.offset) + doorpadding,
+                                    (this.box.y + this.box.height)
+                                )
+                            );
+                        }
+                    } else { 
+                        triangle_south = new VC.Triangle(
+                            centerPoint,
+                            new VC.Point(
+                                this.box.x + (this.box.width/2 - door.offset) - doorpadding,
+                                (this.box.y + this.box.height)
+                            ),
+                            new VC.Point(
+                                this.box.x + (this.box.width/2 - door.offset) + doorpadding,
+                                (this.box.y + this.box.height)
+                            )
+                        );
+                    }
                     break;
                 case Direction.WEST:
-                    triangle_west = new VC.Triangle(
-                        centerPoint,
-                        new VC.Point(
-                            this.box.x,
-                            this.box.y + (this.box.height/2 - door.offset) - doorpadding 
-                        ),
-                        new VC.Point(
-                            this.box.x,
-                            this.box.y + (this.box.height/2 - door.offset) + doorpadding 
-                        )
-                    );
+                    if (Math.abs(door.offset) > doorpadding/2){
+                        if (door.offset>0){
+                            triangle_west = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x,
+                                    this.box.y + (this.box.height/2 - door.offset) - doorpadding
+                                ),
+                                new VC.Point(
+                                    this.box.x,
+                                    this.box.y + (this.box.height/2 ) + doorpadding / 2
+                                )
+                            );
+                        }else{
+                            triangle_west = new VC.Triangle(
+                                centerPoint,
+                                new VC.Point(
+                                    this.box.x,
+                                    this.box.y + (this.box.height/2) - doorpadding / 2
+                                ),
+                                new VC.Point(
+                                    this.box.x,
+                                    this.box.y + (this.box.height/2 - door.offset) + doorpadding
+                                )
+                            );
+                        }
+                    } else { 
+                        triangle_west = new VC.Triangle(
+                            centerPoint,
+                            new VC.Point(
+                                this.box.x,
+                                this.box.y + (this.box.height/2 - door.offset) - doorpadding 
+                            ),
+                            new VC.Point(
+                                this.box.x,
+                                this.box.y + (this.box.height/2 - door.offset) + doorpadding 
+                            )
+                        );
+                    }
+
                     break;
             }
         })
@@ -243,37 +361,7 @@ class PolygonalRoom extends VC.Scene {
         //determine what to do with each corner
         for(var corner = 0; corner < 4; corner ++){
             var method = VC.Math.random(0,2)
-            switch (corner){
-                case 0://ne
-                    var northDoor = this.findDoor(Direction.NORTH);
-                    var eastDoor = this.findDoor(Direction.EAST);
-                    if ((northDoor && Math.abs(northDoor.offset) > this.box.width/3)||(eastDoor && Math.abs(eastDoor.offset) > this.box.height/3)){
-                        method = 0
-                    }
-                    break;
-                case 1://nw
-                    var northDoor = this.findDoor(Direction.NORTH);
-                    var westDoor = this.findDoor(Direction.WEST);
-                    if ((northDoor && Math.abs(northDoor.offset) > this.box.width/3)||(westDoor && Math.abs(westDoor.offset) > this.box.height/3)){
-                        method = 0
-                    }
-                    break;
-                case 2://sw
-                    var southDoor = this.findDoor(Direction.SOUTH);
-                    var westDoor = this.findDoor(Direction.WEST);
-                    if ((southDoor && Math.abs(southDoor.offset) > this.box.width/3)||(westDoor && Math.abs(westDoor.offset) > this.box.height/3)){
-                        method = 0
-                    }
-                    break;
-                case 2://se
-                    var southDoor = this.findDoor(Direction.SOUTH);
-                    var eastDoor = this.findDoor(Direction.EAST);
-                    if ((southDoor && Math.abs(southDoor.offset) > this.box.width/3)||(eastDoor && Math.abs(eastDoor.offset) > this.box.height/3)){
-                        method = 0
-                    }
-            
-                
-            }
+         
 
             var w1 = wallTriangles[corner];
             var w2 = wallTriangles[(corner+1)%4]

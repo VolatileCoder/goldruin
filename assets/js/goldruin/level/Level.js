@@ -224,7 +224,7 @@ class Level extends VC.Scene {
         if ((w * h) < 160000){
             room = new Room(x, y, w, h, wallHeightInBricks)
         } else {
-            if(VC.Math.random(0,2) == 0 && !forceSquare){
+            if(VC.Math.random(1,7) <= 3 && !forceSquare){
                 room = new PolygonalRoom(x, y, w, h, wallHeightInBricks)
             }else {
                 //room = new PolygonalRoom(x, y, w, h, wallHeightInBricks)
