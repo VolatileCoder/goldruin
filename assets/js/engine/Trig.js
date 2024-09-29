@@ -14,6 +14,9 @@ VC.Trig = class {
         return Math.tan(radians);
     }
     static pointToAngle(opposite, adjacent){
+        if(adjacent<0){
+            return Math.PI +  Math.atan(opposite/adjacent);        
+        }
         return Math.atan(opposite/adjacent);
     }
     static distance (x1, y1, x2, y2){

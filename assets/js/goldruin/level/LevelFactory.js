@@ -127,16 +127,16 @@ class LevelFactory {
             var extent = extents[direction];
             switch(direction){
                 case Direction.NORTH:
-                    exitRoom = level.getRoom(extent.x, extent.y - 1);
+                    exitRoom = level.getRoom(extent.x, extent.y - 1, null, null, null, true);
                     break;
                 case Direction.EAST:
-                    exitRoom = level.getRoom(extent.x + 1, extent.y);
+                    exitRoom = level.getRoom(extent.x + 1, extent.y, null, null, null, true);
                     break;
                 case Direction.SOUTH:
-                    exitRoom = level.getRoom(extent.x, extent.y + 1);
+                    exitRoom = level.getRoom(extent.x, extent.y + 1, null, null, null, true);
                     break;
                 case Direction.WEST:
-                    exitRoom = level.getRoom(extent.x - 1, extent.y);
+                    exitRoom = level.getRoom(extent.x - 1, extent.y, null, null, null, true);
                     break;
             }
             //regionRooms.push(entrance);
@@ -275,7 +275,10 @@ class LevelFactory {
         }
     
 
-        level.rooms.forEach((r)=>{r.doors.forEach((d)=>d.stabilize())});
+        level.rooms.forEach((r)=>{
+            r.doors.forEach((d)=>d.stabilize())
+            r.finalize();
+        });
         //set exit
         var exit = new Exit(exitRoom);
         exit.box.x = exitRoom.box.x + exitRoom.box.width/2 - exit.box.width/2

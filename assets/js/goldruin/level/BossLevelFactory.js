@@ -9,7 +9,7 @@ class BossLevelFactory {
         var currentPalette = LevelFactory.getWorldPalette(level.world);
         var nextPalette = LevelFactory.getWorldPalette(level.world + 1);
         
-        var startingRoom = level.getRoom(0,0, 7 * constants.brickWidth, 10 * constants.brickWidth);
+        var startingRoom = level.getRoom(0,0, 7 * constants.brickWidth, 10 * constants.brickWidth, null, true);
         startingRoom.palette = currentPalette;
 
         //startingRoom.box.width = 7 * constants.brickWidth;
@@ -31,7 +31,7 @@ class BossLevelFactory {
             
         }
 
-        var bossRoom = level.getRoom(0,-1, 13 * constants.brickWidth, 13 * constants.brickWidth, 7);
+        var bossRoom = level.getRoom(0,-1, 13 * constants.brickWidth, 13 * constants.brickWidth, 7, true);
         bossRoom.isBossRoom = true;
 
         //TODO:change depending on boss
@@ -48,7 +48,7 @@ class BossLevelFactory {
         rewardDoor.stabilize();
         bossRoom.doors = [entranceDoor, rewardDoor];
     
-        var treasureRoom = level.getRoom(0,-2, 5 * constants.brickWidth, 5 * constants.brickWidth);
+        var treasureRoom = level.getRoom(0,-2, 5 * constants.brickWidth, 5 * constants.brickWidth, null, true);
         treasureRoom.palette = nextPalette;
         var chest = new TreasureChest(treasureRoom, Treasure.HEARTCONTAINER);
         chest.box.x = treasureRoom.box.width/2 + treasureRoom.box.x - chest.box.width/2;
@@ -60,7 +60,7 @@ class BossLevelFactory {
         exitDoor.stabilize();
         treasureRoom.doors = [entranceDoor, exitDoor];
 
-        var exitRoom = level.getRoom(0,-3, 5 * constants.brickWidth, 10 * constants.brickWidth);
+        var exitRoom = level.getRoom(0,-3, 5 * constants.brickWidth, 10 * constants.brickWidth, null, true);
         var exit = new Exit(exitRoom);
         exitRoom.palette = nextPalette;
 

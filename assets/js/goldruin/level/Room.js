@@ -556,7 +556,7 @@ class Room extends VC.Scene {
             object.box.y = this.box.y + Math.round((this.box.height-object.box.height) * Math.random());
         } while (any(this.objects, (o)=>{return o!=object && o.box.collidesWith(object.box)}) || any(this.doors,(d)=>(d.box.collidesWith(object.box))))
     }
-
+    finalize(){}
    
 
 }

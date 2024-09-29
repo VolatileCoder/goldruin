@@ -21,19 +21,19 @@ class Level extends VC.Scene {
     
     set currentRoom(nextRoom){
         if(this.#currentRoom != nextRoom){
-            if(this.#currentRoom != null && this.#currentRoom instanceof Room){
+            if(this.#currentRoom != null && (this.#currentRoom instanceof Room || this.#currentRoom instanceof PolygonalRoom)){
                 this.#currentRoom.doors.forEach((d)=>{
                     var n = this.findNeighbor(this.#currentRoom, d.wall);
-                    if(n && n instanceof Room){
+                    if(n && (n instanceof Room || n instanceof PolygonalRoom)){
                         n.volume = 0;
                     }
                 })
             }
             this.#currentRoom = nextRoom;
-            if(this.#currentRoom != null && this.#currentRoom instanceof Room){
+            if(this.#currentRoom != null && (this.#currentRoom instanceof Room || this.#currentRoom instanceof PolygonalRoom)){
                 this.#currentRoom.doors.forEach((d)=>{
                     var n = this.findNeighbor(this.#currentRoom, d.wall);
-                    if(n && n instanceof Room){
+                    if(n && (n instanceof Room || n instanceof PolygonalRoom)){
                         n.volume = .25;
                         switch(d.wall){
                             case Direction.EAST: 
@@ -115,7 +115,7 @@ class Level extends VC.Scene {
             var pc = game.player.box.center();
             this.currentRoom.doors.forEach((d)=>{
                 var n = this.findNeighbor(this.currentRoom, d.wall);
-                if(n && n instanceof Room){
+                if(n && (n instanceof Room || n instanceof PolygonalRoom)){
                     if(d.isEntrance){
                         n.volume = 0;
                         return
@@ -129,7 +129,7 @@ class Level extends VC.Scene {
                     d = VC.Math.constrain(0, d, maxDistance);
                     
                     n.volume =  VC.Math.inversePercentToRange(d/maxDistance, .1, .66);
-                    console.log(n.volume);
+
                     n.preRender(deltaT);
                 }
             });
@@ -213,10 +213,24 @@ class Level extends VC.Scene {
         }
     }
 
-    getRoom(x, y, w, h, wallHeightInBricks){
+    getRoom(x, y, w, h, wallHeightInBricks, forceSquare){
         var foundRoom = this.findRoom(x,y);
         if(foundRoom) return foundRoom;
-        var room = new Room(x, y, w, h, wallHeightInBricks)
+        if (!w && !h) {
+            w = Math.round((((constants.roomMaxWidthInBricks - constants.roomMinWidthInBricks) * Math.random()) + constants.roomMinWidthInBricks)) * constants.brickWidth;
+            h =  Math.round((((constants.roomMaxHeightInBricks - constants.roomMinHeightInBricks) * Math.random()) + constants.roomMinHeightInBricks)) * constants.brickWidth;
+        }
+        var room = null;
+        if ((w * h) < 160000){
+            room = new Room(x, y, w, h, wallHeightInBricks)
+        } else {
+            if(VC.Math.random(0,2) == 0 && !forceSquare){
+                room = new PolygonalRoom(x, y, w, h, wallHeightInBricks)
+            }else {
+                //room = new PolygonalRoom(x, y, w, h, wallHeightInBricks)
+                room = new Room(x, y, w, h, wallHeightInBricks)
+            }
+        }
         room.palette = this.palette;
         this.rooms.push(room);
         return room;
@@ -253,6 +267,7 @@ class Level extends VC.Scene {
     openNextRoom(direction){
         var nextRoom = game.level.findNeighbor(this.currentRoom, direction);
         if(nextRoom.opened){
+            console.log("Room Area:", nextRoom.box.width * nextRoom.box.height)
             nextRoom.visited = 1;
             game.player.room = nextRoom;
             this.currentRoom = nextRoom;

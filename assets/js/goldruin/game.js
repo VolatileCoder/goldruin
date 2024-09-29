@@ -18,6 +18,8 @@ class Game extends VC.Game {
         this.player.tntCount = 5;
         
         this.currentScene = new TitleScreen(this.screen, this.infoScreen);
+        //this.currentScene = new PolygonalRoom(0,0,dimensions.width-200, dimensions.width-200, 5);
+        //this.currentScene.finalize()
         this.currentScene.preDisplay();
     }
     

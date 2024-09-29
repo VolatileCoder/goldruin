@@ -24,14 +24,14 @@ class GameObject{
         return this.#relativePan;
     }
     set room(nextRoom){
-        if (this.#room && (this.#room instanceof Room)){
+        if (this.#room && (this.#room instanceof Room || this.#room instanceof PolygonalRoom)){
             var currentIndex = this.#room.objects.indexOf(this);
             if (currentIndex>-1){
                 this.#room.objects.splice(currentIndex, 1);
             }
         }
         this.#room = nextRoom;
-        if(this.#room && (this.#room instanceof Room)){
+        if(this.#room && (this.#room instanceof Room || this.#room instanceof PolygonalRoom)){
             this.#room.objects.push(this);
             this.checkAudioLevels();
         }
