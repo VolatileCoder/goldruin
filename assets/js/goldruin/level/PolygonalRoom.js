@@ -800,7 +800,13 @@ class PolygonalRoom extends VC.Scene {
             var constrained = this.constrain(object, VC.Math.random(this.box.x, this.box.x+this.box.width), VC.Math.random(this.box.y, this.box.y+this.box.height))
             object.box.x = constrained.x;
             object.box.y = constrained.y;
-        } while (any(this.objects, (o)=>{return o!=object && o.box.collidesWith(object.box)}) || any(this.doors,(d)=>(d.box.collidesWith(object.box))))
+        } while (any(this.objects, (o)=>{
+            if(o instanceof TreasureChest){
+                var testBox = new VC.Box(o.box.x-o.box.width,o.box.y-o.box.height, o.box.width*3, o.box.height*3)
+                return o!=object && testBox.collidesWith(object.box)
+            }
+            return o!=object && o.box.collidesWith(object.box)
+        }) || any(this.doors,(d)=>(d.box.collidesWith(object.box))))
     }
 
 }
