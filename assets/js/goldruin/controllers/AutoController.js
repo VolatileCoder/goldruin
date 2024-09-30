@@ -16,6 +16,7 @@ class AutoController extends Controller {
         this.right = Math.round(Math.random());
         var time = Math.round(Math.random()*1000)+250;
         this.nextRandomization = Date.now() + time;
+        this.nextDirection = Date.now();
     }
     
     read(forObject){
@@ -40,39 +41,71 @@ class AutoController extends Controller {
         if (this.attack == 0){
             var directed = false;
             var target = null;
-            forObject.getObjectsInView().forEach((o)=>{
-                if(o.team == opposingTeam){
-                    var diffX = Math.abs(forObject.box.center().x - o.box.center().x);
-                    var diffY = Math.abs(forObject.box.center().y - o.box.center().y);
-                    if(Math.abs(diffY-diffX) > 25){
-                        if(diffY > diffX){     
+            var minDist = null;
+            if(this.nextDirection<Date.now()){       
+                forObject.getObjectsInView().forEach((o)=>{
+                    if(o.team == opposingTeam){
+                        var dist = VC.Trig.distance(forObject.box.center().x, forObject.box.center().y, o.box.center().x, o.box.center().y)
+                        if(minDist!=null && dist>minDist) {
+                            return;
+                        }
+                        minDist = dist;
+
+                        var angle = VC.Trig.pointToAngle(o.box.center().y - forObject.box.center().y, o.box.center().x - forObject.box.center().x)
+
+                        var deg = VC.Trig.radiansToDegrees(angle);
+                        console.log(deg);
+                        if (deg>=22.5 && deg<67.5){
+                            this.right = 1;
+                            this.down = 1;
                             this.left = 0;
-                            this.right = 0;
-                            if(forObject.box.center().y > o.box.center().y){
-                                this.up = 1;
-                                this.down = 0;
-                            }else{
-                                this.up = 0;
-                                this.down = 1;
-                            }
-                        } else {
                             this.up = 0;
+                        }else if (deg>=67.5 && deg<112.5){
+                            this.right = 0;
+                            this.down = 1;
+                            this.left = 0;
+                            this.up = 0;
+                        }else if (deg>=112.5 && deg<157.5){
+                            this.right = 0;
+                            this.down = 1;
+                            this.left = 1;
+                            this.up = 0;
+                        } else if (deg>=157.5 && deg<202.5){
+                            this.right = 0;
                             this.down = 0;
-                            if(forObject.box.center().x > o.box.center().x){
-                                this.left = 1;
-                                this.right = 0;
-                            }else{
-                                this.left = 0;
-                                this.right = 1;
-                            }
-                        }    
+                            this.left = 1;
+                            this.up = 0;
+                        } else if (deg>=202.5 && deg<247.5){
+                            this.right = 0;
+                            this.down = 0;
+                            this.left = 1;
+                            this.up = 1;
+                        } else if (deg>=247.5 && deg<292.5){
+                            this.right = 0;
+                            this.down = 0;
+                            this.left = 0;
+                            this.up = 1;
+                        } else if (deg>=292.5 && deg<337.5){
+                            this.right = 1;
+                            this.down = 0;
+                            this.left = 0;
+                            this.up = 1;
+                        } else {
+                            this.right = 1;
+                            this.down = 0;
+                            this.left = 0;
+                            this.up = 0;  
+                        }
+
+
+                        directed = true;
+                        target = o.box.center();
                     }
-                    directed = true;
-                    target = o.box.center();
-                }
-            
-            });
+                
+                });
+            }
             if(directed){
+                this.nextDirection = Date.now() + 375;
                 forObject.getObjectsInView().forEach((o)=>{
                     if(o.team == Team.UNALIGNED && o.plane == Plane.PHYSICAL){
                         if(navigationBox.collidesWith(o.box)){
@@ -113,7 +146,7 @@ class AutoController extends Controller {
                 });
             }
 
-            if(!directed){
+            if(!directed && this.nextDirection<Date.now()){
                 if(this.nextRandomization<Date.now()){
                     this.randomize();
                 }    
