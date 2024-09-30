@@ -85,7 +85,7 @@ class AutoController extends Controller {
                             this.down = 0;
                             this.left = 0;
                             this.up = 1;
-                        } else if (deg>=292.5 && deg<337.5){
+                        } else if (deg>=292.5 && deg<337.5 || deg<0){   
                             this.right = 1;
                             this.down = 0;
                             this.left = 0;
