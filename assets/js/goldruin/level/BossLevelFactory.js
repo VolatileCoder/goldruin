@@ -6,6 +6,8 @@ class BossLevelFactory {
 
         var level = new Level(screen, infoScreen);
         level.number = levelNumber;
+        level.statistics.levelNumber = levelNumber;
+        
         var currentPalette = LevelFactory.getWorldPalette(level.world);
         var nextPalette = LevelFactory.getWorldPalette(level.world + 1);
         
