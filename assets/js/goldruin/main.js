@@ -1,5 +1,5 @@
 //REQUIRES Direction, Team, State, Layer, Plane, GameObject, Character, InvisibleObject, Starburst, TNT, Explosion, Torch, TorchLightEffect, Exit, SpikeTrap, ScorchMark, Treasure, TreasureChest, CaveSpider, Snake, Player, Format, AutoController
-const VERSION = "v4.24.09.29.08 BETA"
+const VERSION = "v4.24.09.30.01 BETA"
 const DEBUG = false
 const SCREENBLACK = "#080808";
 
@@ -20,8 +20,8 @@ var constants =  {
     thresholdDepth: 20,
     roomMinWidthInBricks: 5,
     roomMinHeightInBricks: 5,
-    roomMaxWidthInBricks: 15,
-    roomMaxHeightInBricks: 15, 
+    roomMaxWidthInBricks: 13,
+    roomMaxHeightInBricks: 13, 
     spriteFamesPerSecond: 10,
     controllerRadius: 210,
     controllerCrossThickness: 80,

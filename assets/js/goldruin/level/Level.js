@@ -4,6 +4,7 @@ class Level extends VC.Scene {
     number = -1;
     rooms = [];
     #currentRoom = null;
+    #backDropElement = null;
     
     statistics =  null;
     constructor(){
@@ -141,6 +142,10 @@ class Level extends VC.Scene {
         if(this.#lastRenderedRoom != this.currentRoom){
             screen.clear();
             this.#lastRenderedRoom = this.currentRoom;
+        }
+        if(!this.#backDropElement){
+            this.#backDropElement = screen.drawRect(0,0,dimensions.width, dimensions.width, SCREENBLACK, SCREENBLACK, 0)
+            screen.onClear(()=>{this.#backDropElement = null})
         }
         if (this.currentRoom){
             this.currentRoom.render(deltaT, screen); 

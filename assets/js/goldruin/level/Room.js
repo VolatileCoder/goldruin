@@ -30,11 +30,11 @@ class Room extends VC.Scene {
         this.tileSeed = Math.floor(Math.random()*100);
 
         if(this.box.width == 0){
-            this.box.width = Math.round((((constants.roomMaxWidthInBricks - constants.roomMinWidthInBricks) * Math.random()) + constants.roomMinWidthInBricks)) * constants.brickWidth;
+            this.box.width = Math.floor(VC.Math.random(constants.roomMinWidthInBricks, constants.roomMaxWidthInBricks)) * constants.brickWidth;
         }
         
         if(this.box.height == 0){
-            this.box.height = Math.round((((constants.roomMaxHeightInBricks - constants.roomMinHeightInBricks) * Math.random()) + constants.roomMinHeightInBricks)) * constants.brickWidth;
+            this.box.height = Math.floor(VC.Math.random(constants.roomMinHeightInBricks, constants.roomMaxHeightInBricks)) * constants.brickWidth;
         }
         //center by default
         this.box.x = Math.round((dimensions.width - this.box.width - this.wallHeight*2) / 2) + this.wallHeight;
@@ -149,7 +149,24 @@ class Room extends VC.Scene {
     renderStructure(screen){
         //render room
         //render clip area
-        screen.drawRect(0, 0, dimensions.width, dimensions.width, this.palette.clipColor, this.palette.clipColor, 0);
+        var clipString = "0 0 " + dimensions.width + " " + dimensions.width
+
+        var clipBox = new VC.Box(
+            this.box.x - this.wallHeight - constants.brickWidth,
+            this.box.y - this.wallHeight - constants.brickWidth,
+            this.box.width + this.wallHeight * 2 + constants.brickWidth * 2,
+            this.box.height + this.wallHeight * 2 + constants.brickWidth * 2,
+        )
+
+        screen.drawRect(
+            clipBox.x,
+            clipBox.y, 
+            clipBox.width,
+            clipBox.height,
+            this.palette.clipColor, 
+            this.palette.clipColor,
+            0
+        ).attr("clip-rect", clipString);
             
         //render walls
         screen.drawRect(

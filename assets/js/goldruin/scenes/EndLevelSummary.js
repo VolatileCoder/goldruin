@@ -10,10 +10,11 @@ class EndLevelSummary extends Room {
         this.box.y = Math.round((dimensions.width - this.box.height - this.wallHeight*2) / 2) + this.wallHeight;
         this.palette = JSON.parse(JSON.stringify(game.level.number % 5 == 4 ? LevelFactory.getWorldPalette(game.level.world + 1) : game.level.palette));
         this.palette.clipColor = SCREENBLACK;
+        
 
         var exit = new Exit(this)
         exit.box.x = this.box.center().x - exit.box.width / 2 ;
-        exit.box.y = this.wallHeight + constants.doorFrameThickness * 2;
+        exit.box.y = this.box.y + constants.doorFrameThickness;
         var els = this;
         exit.onTrip = function(){
             game.player.keys = [];
@@ -52,6 +53,10 @@ class EndLevelSummary extends Room {
     }
     statsRendered = false
     render(deltaT, screen){
+        
+        if(!this.statsRendered){
+            screen.drawRect(0,0,dimensions.width, dimensions.width, SCREENBLACK, SCREENBLACK, 0);
+        }
         super.render(deltaT, screen)
         if(!this.statsRendered){
             var statsBox = new VC.Box(this.box.x + this.box.width + this.wallHeight, 0, dimensions.width - (this.box.x + this.box.width + this.wallHeight), dimensions.width);

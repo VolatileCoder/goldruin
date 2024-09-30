@@ -49,14 +49,13 @@ class PolygonalRoom extends VC.Scene {
         this.tileSeed = Math.floor(Math.random()*100);
 
         if(this.box.width == 0){
-            this.box.width = Math.round((((constants.roomMaxWidthInBricks - constants.roomMinWidthInBricks) * Math.random()) + constants.roomMinWidthInBricks)) * constants.brickWidth;
-       
-            //this.box.width = 500;
+            this.box.width = Math.floor(VC.Math.random(constants.roomMinWidthInBricks, constants.roomMaxWidthInBricks)) * constants.brickWidth;
+            //this.box.width = constants.roomMaxWidthInBricks * constants.brickWidth 
         }
         
         if(this.box.height == 0){
-            //this.box.height = 500;
-            this.box.height = Math.round((((constants.roomMaxHeightInBricks - constants.roomMinHeightInBricks) * Math.random()) + constants.roomMinHeightInBricks)) * constants.brickWidth;
+            this.box.height = Math.floor(VC.Math.random(constants.roomMinHeightInBricks, constants.roomMaxHeightInBricks)) * constants.brickWidth;
+            //this.box.height = constants.roomMaxHeightInBricks * constants.brickWidth 
         }
 
         //center by default
@@ -479,10 +478,10 @@ class PolygonalRoom extends VC.Scene {
     }
 
     renderStructure(screen){
-            //render clip area
+        //render clip area
             
-        screen.drawRect(0, 0, dimensions.width, dimensions.width, this.palette.clipColor, this.palette.clipColor, 0);
-        
+        //screen.drawRect(0, 0, dimensions.width, dimensions.width, this.palette.clipColor, this.palette.clipColor, 0);
+        var clipString = "0 0 " + dimensions.width + " " + dimensions.width
 
         //render floor
         var t = this.tileSeed;
@@ -527,10 +526,24 @@ class PolygonalRoom extends VC.Scene {
             var point3 = new VC.Point(Math.sin(angle2) * distance + t.p3.x, Math.cos(angle2) * distance + t.p3.y);
             var point4 = t.p3;
             screen.drawPoly(point1.x, point1.y, point2.x, point2.y, point3.x, point3.y, point4.x, point4.y, 0,0,this.palette.wallColor, "#000", 0);
+            
+            //draw border
+            var borderThickness = Math.sqrt(Math.pow(constants.brickWidth, 2) + Math.pow(constants.brickWidth,2));
+            
+            
+            screen.drawPoly(
+                point2.x, point2.y, 
+                Math.sin(angle1) * borderThickness + point2.x, Math.cos(angle1) * borderThickness + point2.y, 
+                Math.sin(angle2) * borderThickness + point3.x, Math.cos(angle2) * borderThickness + point3.y, 
+                point3.x, point3.y,
+                0,0,
+                this.palette.clipColor, this.palette.clipColor, 0).attr("clip-rect", clipString);
+            
             screen.drawLine(point1.x, point1.y, point2.x, point2.y, "#000", constants.lineThickness);
             screen.drawLine(point3.x, point3.y, point4.x, point4.y, "#000", constants.lineThickness);
 
             var brickHeight = Math.sqrt (Math.pow(constants.brickHeight,2) + Math.pow(constants.brickHeight,2));
+
             var rows = this.wallHeight / constants.brickHeight;
 
             var columns = VC.Trig.distance(t.p2.x, t.p2.y, t.p3.x, t.p3.y) / (constants.brickWidth/2);
