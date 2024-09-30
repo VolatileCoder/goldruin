@@ -790,10 +790,16 @@ class PolygonalRoom extends VC.Scene {
             object.box.y = VC.Math.random(this.box.y, this.box.y+this.box.height);
           
             if(!this.boxInside(object.box)){
+                var handbrake = 0;
                 while (!this.boxInside(object.box)){
                     //outside of boundaries. 
-                    object.box.x += object.box.x < this.#centerPoint.x ? 10 : - 10;
-                    object.box.y += object.box.y < this.#centerPoint.y ? 10 : - 10;
+                    object.box.x += object.box.x < this.#centerPoint.x ? 10 : -10;
+                    object.box.y += object.box.y < this.#centerPoint.y ? 10 : -10;
+                    handbrake++;
+                    if (handbrake>100){
+                        console.log("broke");   
+                        break;
+                    }
                 }        
             }
 

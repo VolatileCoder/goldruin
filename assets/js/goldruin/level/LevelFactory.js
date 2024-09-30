@@ -19,7 +19,7 @@ class LevelFactory {
         var maxRegion = 0;
         if(level.number <= 23){
             roomsPerRegion = ((level.number % 5 + 1) * 5) + 5;
-            maxRegion = Math.floor(level.number/4);
+            maxRegion = Math.floor(level.number/5);
         } else {
             roomsPerRegion = (((level.number - 24) + 1) * 5) + 25;
             maxRegion = Treasure.BLUEKEY;
@@ -160,6 +160,23 @@ class LevelFactory {
 
         exitRoom.exit = 1;
 
+        //trim doors
+
+        level.rooms.forEach((r)=>{
+            if(r.doors.length==4){
+                //pick a random direction
+                var direction = VC.Math.random(0,3);
+                var direction2 = (direction + 2) % 4
+                var r2 = level.findNeighbor(r,direction);
+                var r3 = level.findNeighbor(r2,direction2);
+                if(r2.doors.length == 4 && r == r3){
+                    r.doors.splice(r.doors.indexOf(r.findDoor(direction)), 1);
+                    r2.doors.splice(r2.doors.indexOf(r2.findDoor((direction + 2) % 4)), 1);
+                }
+            }
+        });
+
+        
         //jitter rooms
         for(var i=0;i<level.rooms.length;i++){
             
