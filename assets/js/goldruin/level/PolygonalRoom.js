@@ -677,6 +677,7 @@ class PolygonalRoom extends VC.Scene {
             }
         })
         if (this.barred) {
+            
             return constrained;
         }
         
