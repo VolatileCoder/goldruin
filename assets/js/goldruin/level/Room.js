@@ -152,10 +152,10 @@ class Room extends VC.Scene {
         var clipString = "0 0 " + dimensions.width + " " + dimensions.width
 
         var clipBox = new VC.Box(
-            this.box.x - this.wallHeight - constants.brickWidth,
-            this.box.y - this.wallHeight - constants.brickWidth,
-            this.box.width + this.wallHeight * 2 + constants.brickWidth * 2,
-            this.box.height + this.wallHeight * 2 + constants.brickWidth * 2,
+            this.box.x - this.wallHeight - constants.brickWidth/2,
+            this.box.y - this.wallHeight - constants.brickWidth/2,
+            this.box.width + this.wallHeight * 2 + constants.brickWidth,
+            this.box.height + this.wallHeight * 2 + constants.brickWidth,
         )
 
         screen.drawRect(

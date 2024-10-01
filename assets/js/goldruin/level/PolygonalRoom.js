@@ -528,7 +528,7 @@ class PolygonalRoom extends VC.Scene {
             screen.drawPoly(point1.x, point1.y, point2.x, point2.y, point3.x, point3.y, point4.x, point4.y, 0,0,this.palette.wallColor, "#000", 0);
             
             //draw border
-            var borderThickness = Math.sqrt(Math.pow(constants.brickWidth, 2) + Math.pow(constants.brickWidth,2));
+            var borderThickness = Math.sqrt(Math.pow(constants.brickWidth/2, 2) + Math.pow(constants.brickWidth/2,2));
             
             
             screen.drawPoly(
@@ -663,12 +663,7 @@ class PolygonalRoom extends VC.Scene {
         if (!this.boxInside(constrained)){
             //outside of boundaries. 
             constrained.x = x1;
-            constrained.y = y1;
-            while (!this.boxInside(constrained)){
-                //outside of boundaries. 
-                constrained.x += constrained.x < this.#centerPoint.x ? 10 : - 10;
-                constrained.y += constrained.y < this.#centerPoint.y ? 10 : - 10;
-            }       
+            constrained.y = y1;  
         }
         
         

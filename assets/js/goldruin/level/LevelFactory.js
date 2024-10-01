@@ -163,13 +163,12 @@ class LevelFactory {
         //trim doors
 
         level.rooms.forEach((r)=>{
-            if(r.doors.length==4){
+            if(r.doors.length==4 && !(r.x==0 && r.y==0)){
                 //pick a random direction
                 var direction = VC.Math.random(0,3);
                 var direction2 = (direction + 2) % 4
                 var r2 = level.findNeighbor(r,direction);
-                var r3 = level.findNeighbor(r2,direction2);
-                if(r2.doors.length == 4 && r == r3){
+                if(r2.doors.length == 4 && !(r2.x==0 && r2.y==0)){
                     r.doors.splice(r.doors.indexOf(r.findDoor(direction)), 1);
                     r2.doors.splice(r2.doors.indexOf(r2.findDoor((direction + 2) % 4)), 1);
                 }
