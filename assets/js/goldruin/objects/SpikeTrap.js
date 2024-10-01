@@ -14,11 +14,10 @@ class SpikeTrap extends GameObject{
         
         this.playSound(0, SoundEffects.FLOOR_SPIKES, .25, false);
 
-        this.box.width = 62;
-        this.box.height = 58;
+        var attackBox = new VC.Box(this.box.x, this.box.y, 62, 58);
         this.room.objects.forEach((o)=>{
-            if(o.plane==Plane.PHYSICAL && this.box.collidesWith(o.box) && o.hurt!=null){
-                var rect = o.box.intersectRect(this.box);
+            if(o.plane==Plane.PHYSICAL && attackBox.collidesWith(o.box) && o.hurt!=null){
+                var rect = o.box.intersectRect(attackBox);
                 if(rect){
                     o.hurt(5, Direction.NORTH)
                     var sb = new Starburst(this.room);

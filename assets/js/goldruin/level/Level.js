@@ -311,22 +311,22 @@ class Level extends VC.Scene {
             case Direction.NORTH:
                 return {
                     x : game.player.box.x,//room.box.x + room.wallHeight + door.offset + room.box.width/2,
-                    y : room.box.y - constants.doorHeight + constants.doorFrameThickness + game.player.box.height
+                    y : room.box.y + 5
                 };
             case Direction.EAST: 
                 return {
-                    x : room.box.x + room.box.width - game.player.box.width, 
+                    x : room.box.x + room.box.width - game.player.box.width - 5, 
                     y : game.player.box.y//room.box.y + room.wallHeight - constants.doorHeight/2
                 };
             
             case Direction.SOUTH:
                 return {
                     x : game.player.box.x,//room.box.x + room.wallHeight + door.offset + room.box.width/2,
-                    y : room.box.y + room.box.height - game.player.box.height
+                    y : room.box.y + room.box.height - game.player.box.height - 5
                 };
             case Direction.WEST: 
                 return {
-                    x : room.box.x + game.player.box.width/2,
+                    x : room.box.x + game.player.box.width + 5,
                     y : game.player.box.y//room.box.y + room.wallHeight - constants.doorHeight/2
                 };
             
