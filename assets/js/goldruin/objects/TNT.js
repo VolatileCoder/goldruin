@@ -39,7 +39,6 @@ class TNT extends GameObject{
     }
 
     move(deltaT){
-        console.log("TNT", this.relativePan);
         if(this.state == State.IDLE || this.state == State.DEAD){
              return;
         }

@@ -160,17 +160,22 @@ class LevelFactory {
 
         exitRoom.exit = 1;
 
-        //trim doors
 
+
+        //trim doors
         level.rooms.forEach((r)=>{
             if(r.doors.length==4 && !(r.x==0 && r.y==0)){
                 //pick a random direction
                 var direction = VC.Math.random(0,3);
                 var direction2 = (direction + 2) % 4
+               
                 var r2 = level.findNeighbor(r,direction);
-                if(r2.doors.length == 4 && !(r2.x==0 && r2.y==0)){
-                    r.doors.splice(r.doors.indexOf(r.findDoor(direction)), 1);
-                    r2.doors.splice(r2.doors.indexOf(r2.findDoor((direction + 2) % 4)), 1);
+               
+                if (!this.hasOrphans(level, [r.findDoor(direction), r2.findDoor(direction2)])){
+                    if(r2.doors.length == 4 && !(r2.x==0 && r2.y==0)){
+                        r.doors.splice(r.doors.indexOf(r.findDoor(direction)), 1);
+                        r2.doors.splice(r2.doors.indexOf(r2.findDoor((direction + 2) % 4)), 1);
+                    }
                 }
             }
         });
@@ -504,5 +509,27 @@ class LevelFactory {
 
         var paletteIndex = (worldNumber - 1) % worldPalette.length;
         return worldPalette[paletteIndex];
+    }
+
+    hasOrphans(level, ignoreDoors){
+        queue = [level.rooms[0]];
+        visited = [];
+        while(queue.length > 0){
+            room = queue.pop();
+            room.doors.forEach((d)=>{
+                if(ignoreDoors.indexOf(d) > -1){
+                    return;
+                }
+                var n = level.findNeighbor(room, d.wall);
+                if(visited.indexOf(n)==-1 && queue.indexOf(n)==-1){
+                    queue.push(n);
+                }
+            });
+            visited.push(room);
+        }
+        if(visited.length==level.rooms.length){
+            return false;
+        }
+        return true;
     }
 }

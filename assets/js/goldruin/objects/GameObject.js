@@ -87,7 +87,6 @@ class GameObject{
     remove(){
         this.#removed = true;
         this.#audioChannels.forEach((ac)=>{
-            console.log("removing audio channel")
             if(ac!=null && ac instanceof VC.AudioChannel){
                 ac.dispose();
             }

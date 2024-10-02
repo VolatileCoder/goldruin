@@ -169,7 +169,6 @@ class Level extends VC.Scene {
         return null;
     }
     postDisplay(){
-        console.log("Level.postDisplay()");
         this.rooms.forEach((room)=>{
             room.postDisplay();
         });
@@ -272,7 +271,6 @@ class Level extends VC.Scene {
     openNextRoom(direction){
         var nextRoom = game.level.findNeighbor(this.currentRoom, direction);
         if(nextRoom.opened){
-            console.log("Room Area:", nextRoom.box.width * nextRoom.box.height)
             nextRoom.visited = 1;
             game.player.room = nextRoom;
             this.currentRoom = nextRoom;

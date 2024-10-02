@@ -71,7 +71,6 @@ class SwordSkeleton extends Character{
     }
     remove(){
         if (this.room == game.level.currentRoom){
-            console.log("removing skeleton...", Date.now())
         
         }
         super.remove();

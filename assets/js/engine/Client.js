@@ -33,7 +33,6 @@ VC.Client = class {
     static _ready = false;
     static OnReady(func){
         if (VC.Client._ready){
-            console.log("WARNING: Client ready already.");
             func();
             return;
         }

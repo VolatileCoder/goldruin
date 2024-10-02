@@ -18,7 +18,6 @@ VC.Screen = class {
         this.#x = x;
         this.#y = y;
         this.#domElementId = domElementId;
-        console.log(this.#y);
     }
     get domElementId(){
         return this.#domElementId;

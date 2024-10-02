@@ -54,7 +54,7 @@ class AutoController extends Controller {
                         var angle = VC.Trig.pointToAngle(o.box.center().y - forObject.box.center().y, o.box.center().x - forObject.box.center().x)
 
                         var deg = VC.Trig.radiansToDegrees(angle);
-                        console.log(deg);
+                       
                         if (deg>=22.5 && deg<67.5){
                             this.right = 1;
                             this.down = 1;
@@ -96,7 +96,6 @@ class AutoController extends Controller {
                             this.left = 0;
                             this.up = 0;  
                         }
-
 
                         directed = true;
                         target = o.box.center();

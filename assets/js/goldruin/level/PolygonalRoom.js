@@ -572,7 +572,6 @@ class PolygonalRoom extends VC.Scene {
                     if(c == 0 && r>0 && r<rows){
                         if(r == 3){
                             if(this.region!=0 || this.palette.regionColor){
-                                console.log("drawingPoly")
                                 screen.drawPoly(
                                     lastBrickPoint1.x, lastBrickPoint1.y,
                                     brickPoint1.x, brickPoint1.y,
@@ -805,8 +804,7 @@ class PolygonalRoom extends VC.Scene {
                     object.box.x += object.box.x < this.#centerPoint.x ? 10 : -10;
                     object.box.y += object.box.y < this.#centerPoint.y ? 10 : -10;
                     handbrake++;
-                    if (handbrake>100){
-                        console.log("broke");   
+                    if (handbrake>100){   
                         break;
                     }
                 }        
