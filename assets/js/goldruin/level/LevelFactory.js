@@ -171,7 +171,7 @@ class LevelFactory {
                
                 var r2 = level.findNeighbor(r,direction);
                
-                if (!this.hasOrphans(level, [r.findDoor(direction), r2.findDoor(direction2)])){
+                if (!LevelFactory.hasOrphans(level, [r.findDoor(direction), r2.findDoor(direction2)])){
                     if(r2.doors.length == 4 && !(r2.x==0 && r2.y==0)){
                         r.doors.splice(r.doors.indexOf(r.findDoor(direction)), 1);
                         r2.doors.splice(r2.doors.indexOf(r2.findDoor((direction + 2) % 4)), 1);
@@ -511,11 +511,11 @@ class LevelFactory {
         return worldPalette[paletteIndex];
     }
 
-    hasOrphans(level, ignoreDoors){
-        queue = [level.rooms[0]];
-        visited = [];
+    static hasOrphans(level, ignoreDoors){
+        var queue = [level.rooms[0]];
+        var visited = [];
         while(queue.length > 0){
-            room = queue.pop();
+            var room = queue.pop();
             room.doors.forEach((d)=>{
                 if(ignoreDoors.indexOf(d) > -1){
                     return;
