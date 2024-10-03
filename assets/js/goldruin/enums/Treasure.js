@@ -41,7 +41,7 @@ class Treasure {
         return 11;
     }
     static get SWORD(){
-        return 13;
+        return 12;
     }
     static get BEETLE(){
         return 13;

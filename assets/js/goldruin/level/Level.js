@@ -137,6 +137,20 @@ class Level extends VC.Scene {
         }
     }
 
+
+    #message = "";
+    #lastMessage = "";
+    #messageStart = 0;
+    #messageDuration = 2000;
+    #messageFade = 500;
+    #messageBox = null;
+    #messageText = null;
+    
+    set message(text){
+        this.#message = text;
+        this.#messageStart = Date.now();
+    }
+
     #lastRenderedRoom = null
     render(deltaT, screen){
         if(this.#lastRenderedRoom != this.currentRoom){
@@ -151,6 +165,54 @@ class Level extends VC.Scene {
             this.currentRoom.render(deltaT, screen); 
         }
         this.statistics.timeSpent+=deltaT;
+        var frameTime = Date.now()
+        if(frameTime < this.#messageStart + this.#messageDuration + this.#messageFade){
+
+            if(this.message != this.#lastMessage){
+                if(this.#messageText!=null){       
+                    this.#messageText.remove();
+                    this.#messageText==null;
+                }
+                if(this.#messageBox!=null){       
+                    this.#messageBox.remove();
+                    this.#messageBox==null;
+                }
+            }
+            if (this.#messageText==null || this.#messageText!=null){
+                //show message
+                this.#messageText = (new VC.Paragraph(this.#message, "monospace","28px","bold", "#FFF", dimensions.width-125)).render(screen);
+                this.#messageText.attr({"text-anchor": "start"});
+                var bbox = this.#messageText.getBBox();
+                var x = dimensions.width / 2 - bbox.width / 2;
+                var y = (dimensions.width - 33 ) - bbox.height;
+                this.#messageText.attr({"x": x, "y": y});
+                this.#messageBox = screen.drawRect(x-50, y-50, bbox.width + 100, bbox.height + 100 - 28, SCREENBLACK, "#EEE", 7 );
+                this.#messageBox.attr("r", 28)
+                screen.onClear(()=>{
+                    this.#messageBox = null;
+                    this.#messageText = null;
+                })
+            }
+            if (frameTime < this.#messageStart + this.#messageDuration + this.#messageFade){
+                var current = frameTime - this.#messageStart - this.#messageDuration;
+                var final =  this.#messageFade;
+                var opacity = 1-(current / final)
+                this.#messageBox.attr("opacity", opacity);
+                this.#messageText.attr("opacity", opacity);
+            }
+            this.#messageBox.toFront();
+            this.#messageText.toFront();
+        
+        }else {
+            if(this.#messageText!=null){       
+                this.#messageText.remove();
+                this.#messageText==null;
+            }
+            if(this.#messageBox!=null){       
+                this.#messageBox.remove();
+                this.#messageBox==null;
+            }
+        }
     }
 
     postRender(deltaT){

@@ -440,7 +440,9 @@ class LevelFactory {
 
 
         LevelFactory.addTorches(level);
-        
+        if (levelNumber == 0){
+            level.message = "You're locked in.";
+        }
         return level;
     }
 

@@ -67,6 +67,7 @@ class TreasureChest extends GameObject{
                 game.player.health = VC.Math.constrain(0, game.player.health + 10, game.player.maxHealth);
                 game.level.statistics.heartsCollected++;
                 setTimeout(()=>{this.playSound(1,SoundEffects.HEART, .7, false);},400);
+
             } else if (this.#content == Treasure.TNT){
                 game.player.tntCount++;
                 game.level.statistics.tntCollected += 1;
@@ -81,6 +82,51 @@ class TreasureChest extends GameObject{
                 game.level.statistics.goldCollected += goldValue;
                 setTimeout(()=>{this.playSound(1,SoundEffects.GOLD, .7, false);},400);
             }
+            var prefixes = ["Found", "Got", "Discovered", "Yes! It's", "Grabbed", "Nabbed", "Picked up"]
+            var prefix = prefixes[VC.Math.random(0,prefixes.length-1)];
+            var suffix = "";
+            switch(this.#content){
+                case Treasure.SILVERKEY:
+                    suffix = "the Silver Key!"
+                    break;
+                case Treasure.GOLDKEY:
+                    suffix = "the Gold Key!"
+                    break;
+                case Treasure.REDKEY:
+                    suffix = "the Red Key!"
+                    break;
+                case Treasure.GREENKEY:
+                    suffix = "the Green Key!"
+                    break;
+                case Treasure.BLUEKEY:
+                    suffix = "the Blue Key!"
+                    break;
+                case Treasure.HEARTCONTAINER:
+                    suffix = "a Heart Container!"
+                    break;
+                case Treasure.HEART:
+                    suffix = "a Heart!"
+                    break;
+                case Treasure.TNT:
+                    suffix = "a Stick of Dynamite!"
+                    break;
+                case Treasure.COIN:
+                    suffix = "an Ancient Coin! (100g)"
+                    break;
+                case Treasure.CHALICE:
+                    suffix = "a Gold Chalice! (200g)"
+                    break;
+                case Treasure.CROWN:
+                    suffix = "a Gold Crown! (300g)"
+                    break;
+                case Treasure.SWORD:
+                    suffix = "an Ornamental Dagger! (400g)"
+                    break;
+                case Treasure.BEETLE:
+                    suffix = "a Gold Scarab! (500g)"
+                    break;
+            }
+            game.level.message = prefix + " " + suffix;
         }
     }
 
